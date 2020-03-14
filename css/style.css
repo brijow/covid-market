@@ -1,0 +1,11 @@
+
+/* Add or change the styles for all tasks in this css file */
+
+html {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin: 0px;
+}
+
+.geo-path {
+  stroke: #ddd;
+}
