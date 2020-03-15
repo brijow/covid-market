@@ -1,4 +1,4 @@
-class VirusPlot extends Chart {
+class Map extends Chart {
   
   initVis() {
     super.initVis();
@@ -7,6 +7,8 @@ class VirusPlot extends Chart {
     // Promise chaining: dataset has its own initialize() method we wait for
     vis.config.dataset.initialize().then( dataset => {
       // TODO: handle data as required for this chart
+      console.log('=== Map dataset ===');
+      console.log(dataset);
 
       vis.update();
     });
@@ -14,7 +16,6 @@ class VirusPlot extends Chart {
 
   update() {
     let vis = this;
-
     // TODO
   }
 
