@@ -82,19 +82,13 @@ class Map extends Chart {
 
     let geoPathEnter = geoPath.enter().append('path')
         .attr('class', 'geo-path')
-        .attr('d', vis.path)
-        // If this line of code is added, the countries have an appropriate colour.
-        // But I want to move this to the `merge` section.  How?
-        // .attr('fill', feat => vis.colorScheme(vis.colorScale(vis.colorValueByFeature(feat))))
-      .append('title')
-        .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));
+        .attr('d', vis.path);
 
     geoPath.merge(geoPathEnter)
-        .attr('fill', feat => {
-      // TODO: figure out why this isn't working.
-      //    console.log('reached merge section');
-          return vis.colorScheme(vis.colorScale(vis.colorValueByFeature(feat)))
-        });
+        .attr('fill', feat => vis.colorScheme(vis.colorScale(vis.colorValueByFeature(feat))))
+      // TODO: remove this tooltip and replace it with a more fancy one
+      .append('title')
+        .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));
 
   }
 }
