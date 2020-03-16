@@ -9,7 +9,9 @@ let mapData = new MapData({
 });
 let map = new Map({
   parentElement: '#map',
-  dataset : mapData
+  dataset : mapData,
+  containerWidth: 1000,
+  containerHeight: 500
 });
 
 //////////////////////

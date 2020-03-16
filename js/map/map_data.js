@@ -32,7 +32,15 @@ class MapData {
       d['Confirmed'] = +d['Confirmed'];
       d['Deaths'] = +d['Deaths'];
       d['Recovered'] = +d['Recovered'];
+
+      d['Country/Region'] = d['Country/Region'].trim();
+      d['Country/Region'] = (d['Country/Region'] in MapDict)
+        ? MapDict[d['Country/Region']]
+        : d['Country/Region'];
     });
+
+    file = file.filter(d => d['Country/Region'] !== 'Others');
+
     return file;
   }
 
