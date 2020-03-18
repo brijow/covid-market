@@ -10,11 +10,20 @@ class Map extends Chart {
     vis.projection = d3.geoNaturalEarth1();
     vis.path = d3.geoPath().projection(vis.projection);
 
-    // Initialize color scheme for this chart
-    vis.colorScheme = d => d3.interpolateYlOrRd(d);
-    vis.colorScale = d3.scaleSymlog()
-      .domain([0, 100000])
-      .range([0,1]);
+    // How to get your background to be a different colour from water
+    // Taken from Choropleth map tutorial:
+    // https://vizhub.com/jordanmchiu/72c1473eb5ff449ca7910be1e12fcd63?edit=files&file=index.js
+    vis.g.append('path')
+        .attr('class', 'map-background')
+        .attr('d', vis.path({type: 'Sphere'}));
+
+    // Set thresholds for colour value
+    // Adapted from Mike Bostock's threshold choropleth:
+    // https://observablehq.com/@d3/threshold-choropleth
+    vis.thresholds = [0,1,11,101,1001,10001,100001];
+    vis.color = d3.scaleThreshold()
+      .domain(vis.thresholds)
+      .range(d3.schemeYlOrBr[vis.thresholds.length]);
     vis.colorValueByFeature = feat => {
       let country = vis.dataToRender.find(d => feat.properties.name === d.key);
       return (country)
@@ -39,9 +48,6 @@ class Map extends Chart {
           };
         })
         .entries(filteredData);
-
-      console.log('=== Map dataset ===');
-      console.log(vis.dataToRender);
 
       vis.update();
     });
@@ -82,10 +88,10 @@ class Map extends Chart {
 
     let geoPathEnter = geoPath.enter().append('path')
         .attr('class', 'geo-path')
-        .attr('d', vis.path);
+        .attr('d', vis.path)
 
     geoPath.merge(geoPathEnter)
-        .attr('fill', feat => vis.colorScheme(vis.colorScale(vis.colorValueByFeature(feat))))
+        .attr('fill', feat => vis.color(vis.colorValueByFeature(feat)))
       // TODO: remove this tooltip and replace it with a more fancy one
       .append('title')
         .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));

@@ -14,3 +14,7 @@ html {
 .geo-path:hover {
 	fill: steelblue;
 }
+
+.map-background {
+	fill: #385c5f;
+}
