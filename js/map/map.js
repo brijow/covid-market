@@ -6,6 +6,9 @@ class Map extends Chart {
 
     vis.g = vis.svg.append('g');
 
+    vis.colorLegendG = vis.svg.append('g')
+      .attr('transform', `translate(30, 300)`);
+
     // Initialize projection and paths for map
     vis.projection = d3.geoNaturalEarth1();
     vis.path = d3.geoPath().projection(vis.projection);
@@ -20,10 +23,10 @@ class Map extends Chart {
     // Set thresholds for colour value
     // Adapted from Mike Bostock's threshold choropleth:
     // https://observablehq.com/@d3/threshold-choropleth
-    vis.thresholds = [0,1,11,101,1001,10001,100001];
+    vis.thresholds = [0,1,11,101,1001,10001];
     vis.color = d3.scaleThreshold()
       .domain(vis.thresholds)
-      .range(d3.schemeYlOrBr[vis.thresholds.length]);
+      .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
     vis.colorValueByFeature = feat => {
       let country = vis.dataToRender.find(d => feat.properties.name === d.key);
       return (country)
@@ -95,6 +98,18 @@ class Map extends Chart {
       // TODO: remove this tooltip and replace it with a more fancy one
       .append('title')
         .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));
+
+    let colorScale = vis.color;
+    let thresholds = vis.thresholds;
+    vis.colorLegendG.call(mapColorLegend, {
+      colorScale,
+      circleRadius: 8,
+      spacing: 20,
+      textOffset: 10,
+      backgroundRectWidth: 250,
+      titleText: 'Number of confirmed cases',
+      thresholds: thresholds
+    });
 
   }
 }
