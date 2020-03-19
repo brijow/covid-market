@@ -8,4 +8,13 @@ html {
 
 .geo-path {
   stroke: #ddd;
+  stroke-width: 0.1px;
+}
+
+.geo-path:hover {
+	fill: #5fc7c5;
+}
+
+.map-background {
+	fill: #385c5f;
 }

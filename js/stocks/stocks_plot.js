@@ -7,9 +7,6 @@ class StocksPlot extends Chart {
     // Promise chaining: dataset has its own initialize() method we wait for
     vis.config.dataset.initialize().then( dataset => {
       // TODO: handle data as required for this chart
-      console.log('=== Stocks dataset ===');
-      console.log(dataset);
-
       vis.update();
     });
   }
