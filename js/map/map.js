@@ -27,12 +27,30 @@ class Map extends Chart {
     vis.color = d3.scaleThreshold()
       .domain(vis.thresholds)
       .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
-    vis.colorValueByFeature = feat => {
-      let country = vis.dataToRender.find(d => feat.properties.name === d.key);
-      return (country)
-        ? country.value.confirmed
-        : 0;
-    };
+    vis.colorValue = d => d ? d.value.confirmed : 0;
+
+    // Set up stylings for tooltips
+    // Ideally, we'd want something like this for the end result:
+    // https://bl.ocks.org/maelafifi/ee7fecf90bb5060d5f9a7551271f4397
+    // This example uses d3-tip, which we may be able to utilize:
+    // https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js
+    vis.tooltip = d3.select('body')
+        .append('div')
+        .style('opacity', 0)
+        .attr('class', 'tooltip');
+    vis.formatTime = d3.timeFormat("%B %d, %Y");
+    vis.formatTooltip = feat => {
+      let d = vis.getDataByFeature(feat);
+      let confirmed = d ? d.value.confirmed : 0;
+      let deaths = d ? d.value.deaths : 0;
+      let recovered = d ? d.value.recovered : 0;
+      
+      return '<b>' + feat.properties.name + '</b>'
+        + '<hr>'
+        + '<b>Confirmed: </b>' + confirmed + '<br>'
+        + '<b>Deaths: </b>' + deaths + '<br>'
+        + '<b>Recovered: </b>' + recovered;
+      };
 
     vis.config.dataset.initialize().then( dataset => {
       // First, we select a single date
@@ -51,6 +69,8 @@ class Map extends Chart {
           };
         })
         .entries(filteredData);
+
+      vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
       vis.update();
     });
@@ -94,10 +114,27 @@ class Map extends Chart {
         .attr('d', vis.path)
 
     geoPath.merge(geoPathEnter)
-        .attr('fill', feat => vis.color(vis.colorValueByFeature(feat)))
-      // TODO: remove this tooltip and replace it with a more fancy one
-      .append('title')
-        .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));
+        .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
+        // Handle tooltips and fill
+        .on('mouseover', feat => {
+          vis.tooltip.transition()
+            .duration(200)
+            .style('opacity', 1)
+          vis.tooltip
+            .html(vis.formatTooltip(feat));
+        })
+        // Keep track of where tooltip is
+        .on('mousemove', d => {
+          vis.tooltip
+            .style('left', (d3.event.pageX + 20) + 'px')
+            .style('top', (d3.event.pageY) + 'px');
+        })
+        // Remove tooltip and set fill back to whatever it was before
+        .on('mouseout', d => {
+          vis.tooltip.transition()
+            .duration(200)
+            .style('opacity', 0);
+        });
 
     let colorScale = vis.color;
     let thresholds = vis.thresholds;

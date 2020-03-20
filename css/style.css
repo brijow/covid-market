@@ -18,3 +18,16 @@ html {
 .map-background {
 	fill: #385c5f;
 }
+
+div.tooltip {	
+  position: absolute;			
+  text-align: left;			
+  width: 180px;					
+  height: 120px;					
+  padding: 4px;				
+  font: 1rem sans-serif;		
+  background: lightgray;	
+  border: 0px;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}
