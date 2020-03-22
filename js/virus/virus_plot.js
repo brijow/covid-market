@@ -8,6 +8,8 @@ class VirusPlot extends Chart
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
         {
+            console.log(dataset);
+
             // TODO: handle data as required for this chart
             vis.update();
         });
