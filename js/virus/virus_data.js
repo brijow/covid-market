@@ -1,5 +1,5 @@
-class VirusData {
-
+class VirusData
+{
     constructor(_config)
     {
         this.covidDataConfirmed = _config.fileNames[0];
