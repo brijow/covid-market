@@ -1,5 +1,5 @@
-class VirusPlot extends Chart {
-
+class VirusPlot extends Chart
+{
     initVis()
     {
         super.initVis();
