@@ -7,24 +7,36 @@ class TooltipBarchart extends Chart {
     vis.g = vis.svg.append('g')
       .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
+    // Append country name to the top of the chart; change this in update();
+    vis.g.append('text')
+        .attr('class', 'tooltip-title-text')
+        .attr('x', vis.width / 2)
+        .attr('y', - vis.config.margin.top / 3)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '1rem')
+        .style('font-weight', 'bold')
+        .text('Country Name');
+
     // Define axis titles and labels
     const xAxisLabel = 'Cases';
     vis.xAxisTickFormat = number =>
       d3.format('.1s')(number);
     const yAxisLabel = 'Status';
 
-    const statuses = ['confirmed', 'deaths', 'recovered'];
-
+    // Define axis values
     vis.yValue = d => d.key;
     vis.xValue = d => d.value;
 
-    vis.getFill = d => (d.key === 'confirmed')
-      ? 'yellow'
-      : (d.key === 'deaths')
-        ? 'red'
-        : 'green';
+    // Set fill colours: color scheme was chosen using Colorgorical to
+    // maximize perceptual distance within a moderate lightness range
+    // http://vrl.cs.brown.edu/color
+    const statuses = ['confirmed', 'deaths', 'recovered'];
+    vis.barColor = d3.scaleOrdinal()
+      .domain(statuses)
+      .range(['#95b833', '#e72525', '#4cb082'])
+    vis.colorValue = d => d.key;
 
-    // This y-axis is universal.
+    // Set up y-axis, with the expected keys: confirmed, deaths, and recovered
     vis.yScale = d3.scaleBand()
       .domain(statuses)
       .range([vis.height, 0])
@@ -63,7 +75,15 @@ class TooltipBarchart extends Chart {
         .attr('x', vis.width / 2)
         .text(xAxisLabel);
 
-    vis.countryToRender = null;
+    // Initialize a dummy country to render with the proper structure.
+    vis.countryToRender = {
+      'key': 'N/A',
+      'value': {
+        'confirmed': 0,
+        'deaths': 0,
+        'recovered': 0
+      }
+    };
 
     vis.update();
   }
@@ -72,8 +92,7 @@ class TooltipBarchart extends Chart {
     let vis = this;
 
     // The parent sets vis.dataToRender to be the data of the country to be
-    // represented in the barchart.  The object will either be `null` or 
-    // have the format:
+    // represented in the barchart.  The object will have the format:
     // {
     //   key: 'Australia',
     //   value: {
@@ -82,32 +101,17 @@ class TooltipBarchart extends Chart {
     //     recovered: 21
     //   }
     // }
-    if (!vis.countryToRender) {
-      vis.countryToRender = {
-        'key': 'N/A',
-        'value': {
-          'confirmed': 0,
-          'deaths': 0,
-          'recovered': 0
-        }
-      };
-    }
 
+    // First, update the title text
+    d3.select('.tooltip-title-text').text(vis.countryToRender.key);
+
+    // Update the max x-value to allow for proper scaling of the axis
     vis.maxXValue = Math.max(
       vis.countryToRender.value.confirmed,
       vis.countryToRender.value.deaths,
       vis.countryToRender.value.recovered
     );
-
-    vis.dataToRender = 
-    [
-      { 'key': 'confirmed', 'value': vis.countryToRender.value.confirmed },
-      { 'key': 'deaths', 'value': vis.countryToRender.value.deaths },
-      { 'key': 'recovered', 'value': vis.countryToRender.value.recovered },
-    ];
-
     vis.xScale.domain([0, vis.maxXValue]);
-
     vis.g.select('.tooltip-barchart-x-axis')
       .call(d3.axisBottom(d3.scaleLinear()
                             .domain([0, vis.maxXValue])
@@ -117,70 +121,52 @@ class TooltipBarchart extends Chart {
               .ticks(2)
               .tickFormat(vis.xAxisTickFormat));
 
+    // Parse data into render-friendly format
+    vis.dataToRender = 
+    [
+      { 'key': 'confirmed', 'value': vis.countryToRender.value.confirmed },
+      { 'key': 'deaths', 'value': vis.countryToRender.value.deaths },
+      { 'key': 'recovered', 'value': vis.countryToRender.value.recovered },
+    ];
+
     vis.render();
   }
 
   render() {
     let vis = this;
 
-    // let bars = vis.svg.selectAll('g')
-    //     .data(vis.dataToRender)
-
-    // bars.join('g')
-    //     .attr("transform", function(d, i)
-    //     {
-    //       return "translate(0," + i * vis.barHeight + ")";
-    //     });
-
-    // bars.append('rect')
-    //   // .merge(bars)
-    //     .attr('class', 'tooltip-bar')
-    //     .attr('fill', d => vis.getFill(d))
-    //     .attr('height', vis.barHeight)
-    //     .attr('width', d => vis.xScale(vis.xValue(d)))
-    //     .attr('x', 0)
-    //     .attr('y', d => vis.yScale(vis.yValue(d)))
-
-
-    // bars.append('text')
-    //   // .merge(bars)
-    //     .attr('x', 2)
-    //     .attr('y', vis.barHeight / 2)
-    //     .attr('dy', '.35em')
-    //     .attr('fill', 'black')
-    //     .text(d =>
-    //       d.key === 'confirmed'
-    //         ? 'Confirmed: ' + d.value
-    //         : d.key === 'deaths'
-    //           ? 'Deaths: ' + d.value
-    //           : 'Recovered: ' + d.value);
-
+    // Render bars
     let bars = vis.g.selectAll('.tooltip-bar')
         .data(vis.dataToRender);
 
-    // bars.enter().append('text')
-    //   .merge(bars)
-    //     .attr('x', 2)
-    //     .attr('y', vis.barHeight / 2)
-    //     .attr('dy', '.35em')
-    //     // .attr('fill', 'black')
-    //     .text(d =>
-    //       d.key === 'confirmed'
-    //         ? 'Confirmed: ' + d.value
-    //         : d.key === 'deaths'
-    //           ? 'Deaths: ' + d.value
-    //           : 'Recovered: ' + d.value);
-
-    // Set fill and class to be static; all other properties change dynamically
     bars.enter().append('rect')
       .merge(bars)
         .attr('class', 'tooltip-bar')
-        .attr('fill', d => vis.getFill(d))
+        .attr('fill', d => vis.barColor(vis.colorValue(d)))
         .attr('height', vis.barHeight)
-        .attr('width', d => vis.xScale(vis.xValue(d)))
         .attr('x', 0)
         .attr('y', d => vis.yScale(vis.yValue(d)))
+      .transition().duration(200)
+        .attr('width', d => (vis.maxXValue === 0) ? 0 : vis.xScale(vis.xValue(d)))
 
     bars.exit().remove();
+
+    // Render text
+    let barText = vis.g.selectAll('.tooltip-bar-label')
+        .data(vis.dataToRender);
+
+    barText.enter().append('text')
+      .merge(barText)
+        .attr('class', 'tooltip-bar-label')
+        .attr('x', 2)
+        .attr('y', d => vis.yScale(vis.yValue(d)) + vis.barHeight / 2)
+        .attr('dy', '.35em')
+        .attr('fill', 'black')
+        .text(d =>
+          d.key === 'confirmed'
+            ? 'Confirmed: ' + d.value
+            : d.key === 'deaths'
+              ? 'Deaths: ' + d.value
+              : 'Recovered: ' + d.value);
   }
 }

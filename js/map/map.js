@@ -40,21 +40,6 @@ class Map extends Chart {
         .attr('class', 'tooltip');
     vis.formatTime = d3.timeFormat("%B %d, %Y");
     let tooltipBarchartId = 'tooltip-barchart';
-    /*
-    vis.formatTooltip = feat => {
-      let d = vis.getDataByFeature(feat);
-      let confirmed = d ? d.value.confirmed : 0;
-      let deaths = d ? d.value.deaths : 0;
-      let recovered = d ? d.value.recovered : 0;
-      
-      return '<b>' + feat.properties.name + '</b>'
-        + '<div><svg id="' + tooltipBarchartId + '"></svg></div><br>'
-        + '<hr>'
-        + '<b>Confirmed: </b>' + confirmed + '<br>'
-        + '<b>Deaths: </b>' + deaths + '<br>'
-        + '<b>Recovered: </b>' + recovered;
-      };
-    */
     vis.tooltip.html(
       '<div><svg id="' + tooltipBarchartId + '"></svg></div>'
     );
@@ -62,11 +47,15 @@ class Map extends Chart {
     vis.tooltipBarchart = new TooltipBarchart({
       parentElement: '#' + tooltipBarchartId,
       dataset : undefined,
-      containerWidth: 200,
-      containerHeight: 140,
+      containerWidth: 240,
+      containerHeight: 170,
       margin: { top: 30, bottom: 30, right: 10, left: 20 }
     });
     vis.tooltipBarchart.initVis();
+
+    // This function helps us translate from a country name on our world map
+    // to a data element form our COVID data that we can manipulate.
+    vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
     vis.config.dataset.initialize().then( dataset => {
       // First, we select a single date
@@ -85,8 +74,6 @@ class Map extends Chart {
           };
         })
         .entries(filteredData);
-
-      vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
       vis.update();
     });
@@ -135,8 +122,16 @@ class Map extends Chart {
         .on('mouseover', feat => {
           vis.tooltip.transition()
             .duration(200)
-            .style('opacity', 1)
-          vis.tooltipBarchart.countryToRender = vis.getDataByFeature(feat);
+            .style('opacity', 1);
+          let country = vis.getDataByFeature(feat)
+          vis.tooltipBarchart.countryToRender = (country) ? country : {
+            'key': feat.properties.name,
+            'value': {
+              'confirmed': 0,
+              'deaths': 0,
+              'recovered': 0
+            }
+          };
           vis.tooltipBarchart.update();
         })
         // Keep track of where tooltip is
