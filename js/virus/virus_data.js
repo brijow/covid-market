@@ -36,6 +36,32 @@ class VirusData
     {
         // All the time series data takes on the same format.
         // TODO: clean data
+        file.forEach((d) =>
+        {
+            d["Province/State"] =  d["Province/State"].trim();
+            d["Country/Region"] =  d["Country/Region"].trim();
+            d["Lat"]            = +d["Lat"];
+            d["Long"]           = +d["Long"];
+            d["People"]         = [];
+
+            for (var index in d)
+            {
+                if (index !== "Province/State" &&
+                    index !== "Country/Region" &&
+                    index !== "Lat"            &&
+                    index !== "Long"           &&
+                    index !== "People")
+                {
+                    var element_1 = index;
+                    var element_2 = +d[index];
+                    var element_p = [element_1, element_2];
+
+                    d["People"].push(element_p);
+                    delete d[index];
+                }
+            }
+        });
+
         return file
     }
 }
