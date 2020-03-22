@@ -39,6 +39,7 @@ class Map extends Chart {
         .style('opacity', 0)
         .attr('class', 'tooltip');
     vis.formatTime = d3.timeFormat("%B %d, %Y");
+    let tooltipBarchartId = 'tooltip-barchart';
     vis.formatTooltip = feat => {
       let d = vis.getDataByFeature(feat);
       let confirmed = d ? d.value.confirmed : 0;
@@ -46,11 +47,20 @@ class Map extends Chart {
       let recovered = d ? d.value.recovered : 0;
       
       return '<b>' + feat.properties.name + '</b>'
+        + '<div><svg id="' + tooltipBarchartId + '"></svg></div><br>'
         + '<hr>'
         + '<b>Confirmed: </b>' + confirmed + '<br>'
         + '<b>Deaths: </b>' + deaths + '<br>'
         + '<b>Recovered: </b>' + recovered;
       };
+
+    vis.tooltipBarchart = new TooltipBarchart({
+      parentElement: '#' + tooltipBarchartId,
+      dataset : undefined,
+      containerWidth: 100,
+      containerHeight: 50
+    });
+    vis.tooltipBarchart.initVis();
 
     vis.config.dataset.initialize().then( dataset => {
       // First, we select a single date
@@ -117,6 +127,8 @@ class Map extends Chart {
         .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
         // Handle tooltips and fill
         .on('mouseover', feat => {
+          vis.tooltipBarchart.countryToRender = vis.getDataByFeature(feat);
+          vis.tooltipBarchart.update();
           vis.tooltip.transition()
             .duration(200)
             .style('opacity', 1)
