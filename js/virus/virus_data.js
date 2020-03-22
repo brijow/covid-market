@@ -40,7 +40,7 @@ class VirusData
 
         var countries_outp = [];
 
-        // step 1) initial cleaning of data
+        // step 1) here we are doing cleaning of the data
         file.forEach((d) =>
         {
             d["Province/State"] =  d["Province/State"].trim();
@@ -77,7 +77,7 @@ class VirusData
             }
         });
 
-        // step 2) initial grouping of data
+        // step 2) here we are doing grouping of the data
         countries_temp.forEach((c) =>
         {
             var country_name = c;
