@@ -77,6 +77,7 @@ class VirusData
             }
         });
 
+        // step 2) initial grouping of data
         countries_temp.forEach((c) =>
         {
             var country_name = c;
