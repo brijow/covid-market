@@ -36,7 +36,7 @@ class VirusData
     {
         // All the time series data takes on the same format.
         // TODO: clean data
-        countries = new Set();
+        var countries = new Set();
 
         // step 1) initial cleaning of data
         file.forEach((d) =>
