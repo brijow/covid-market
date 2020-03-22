@@ -1,25 +1,31 @@
-class VirusPlot extends Chart {
-  
-  initVis() {
-    super.initVis();
-    let vis = this;
+class VirusPlot extends Chart
+{
+    initVis()
+    {
+        super.initVis();
+        let vis = this;
 
-    // Promise chaining: dataset has its own initialize() method we wait for
-    vis.config.dataset.initialize().then( dataset => {
-      // TODO: handle data as required for this chart
-      vis.update();
-    });
-  }
+        // Promise chaining: dataset has its own initialize() method we wait for
+        vis.config.dataset.initialize().then(dataset =>
+        {
+            console.log(dataset);
 
-  update() {
-    let vis = this;
+            // TODO: handle data as required for this chart
+            vis.update();
+        });
+    }
 
-    // TODO
-  }
+    update()
+    {
+        let vis = this;
 
-  render() {
-    let vis = this;
+        // TODO
+    }
 
-    // TODO
-  }
+    render()
+    {
+        let vis = this;
+
+        // TODO
+    }
 }
