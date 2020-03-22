@@ -64,7 +64,10 @@ class VirusData
                 }
             }
 
-            countries.add(d["Country/Region"]);
+            if (d["Country/Region"] !== "")
+            {
+                countries.add(d["Country/Region"]);
+            }
         });
 
         return file
