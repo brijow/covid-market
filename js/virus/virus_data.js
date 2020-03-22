@@ -36,7 +36,9 @@ class VirusData
     {
         // All the time series data takes on the same format.
         // TODO: clean data
-        var countries = new Set();
+        var countries_temp = new Set();
+
+        var countries_outp = [];
 
         // step 1) initial cleaning of data
         file.forEach((d) =>
@@ -49,6 +51,11 @@ class VirusData
 
             for (var index in d)
             {
+                if (!d.hasOwnProperty(index))
+                {
+                    continue;
+                }
+
                 if (index !== "Province/State" &&
                     index !== "Country/Region" &&
                     index !== "Lat"            &&
@@ -66,10 +73,43 @@ class VirusData
 
             if (d["Country/Region"] !== "")
             {
-                countries.add(d["Country/Region"]);
+                countries_temp.add(d["Country/Region"]);
             }
         });
 
-        return file
+        countries_temp.forEach((c) =>
+        {
+            var country_name = c;
+            var country_data = {};
+            var country_arry = [];
+
+            file.forEach((d) =>
+            {
+                if (d["Country/Region"] === country_name)
+                {
+                    d["People"].forEach((p) =>
+                    {
+                        var old_number = country_data[p[0]] || 0;
+                        var new_number = old_number + p[1];
+
+                        country_data[p[0]] = new_number;
+                    });
+                }
+            });
+
+            for (var index in country_data)
+            {
+                if (!country_data.hasOwnProperty(index))
+                {
+                    continue;
+                }
+
+                country_arry.push([index, country_data[index]]);
+            }
+
+            countries_outp.push([country_name, country_arry]);
+        });
+
+        return countries_outp;
     }
 }
