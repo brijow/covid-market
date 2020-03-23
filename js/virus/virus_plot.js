@@ -67,7 +67,5 @@ class VirusPlot extends Chart
                 country_2 = data;
             }
         });
-
-        console.log(country_1);
     }
 }
