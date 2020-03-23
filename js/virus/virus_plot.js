@@ -84,5 +84,11 @@ class VirusPlot extends Chart
 
         var innerWidth  = target_width  - margin.left - margin.right;
         var innerHeight = target_height - margin.top  - margin.bottom;
+
+        const xValue     = d => d[0];
+        const xAxisLabel = "Date";
+
+        const yValue     = d => d[1];
+        const yAxisLabel = "Number of People";
     }
 }
