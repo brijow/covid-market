@@ -35,6 +35,22 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
+        // the following code is used to extract dataset
+        if (vis.visualize_confirmed)
+        {
+            dataset = dataset.cleanedCovidDataConfirmed;
+        }
+
+        if (vis.visualize_dead)
+        {
+            dataset = dataset.cleanedCovidDataDeaths;
+        }
+
+        if (vis.visualize_recovered)
+        {
+            dataset = dataset.cleanedCovidDataRecovered;
+        }
+
         // the following code is used to extract countries
         var country_1 = null;
         var country_2 = null;
