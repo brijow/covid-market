@@ -27,12 +27,35 @@ class Map extends Chart {
     vis.color = d3.scaleThreshold()
       .domain(vis.thresholds)
       .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
-    vis.colorValueByFeature = feat => {
-      let country = vis.dataToRender.find(d => feat.properties.name === d.key);
-      return (country)
-        ? country.value.confirmed
-        : 0;
-    };
+    vis.colorValue = d => d ? d.value.confirmed : 0;
+
+    // Set up stylings for tooltips
+    // Ideally, we'd want something like this for the end result:
+    // https://bl.ocks.org/maelafifi/ee7fecf90bb5060d5f9a7551271f4397
+    // This example uses d3-tip, which we may be able to utilize:
+    // https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js
+    vis.tooltip = d3.select('body')
+        .append('div')
+        .style('opacity', 0)
+        .attr('class', 'tooltip');
+    vis.formatTime = d3.timeFormat("%B %d, %Y");
+    let tooltipBarchartId = 'tooltip-barchart';
+    vis.tooltip.html(
+      '<div><svg id="' + tooltipBarchartId + '"></svg></div>'
+    );
+
+    vis.tooltipBarchart = new TooltipBarchart({
+      parentElement: '#' + tooltipBarchartId,
+      dataset : undefined,
+      containerWidth: 240,
+      containerHeight: 170,
+      margin: { top: 30, bottom: 30, right: 10, left: 20 }
+    });
+    vis.tooltipBarchart.initVis();
+
+    // This function helps us translate from a country name on our world map
+    // to a data element form our COVID data that we can manipulate.
+    vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
     vis.config.dataset.initialize().then( dataset => {
       // First, we select a single date
@@ -94,10 +117,35 @@ class Map extends Chart {
         .attr('d', vis.path)
 
     geoPath.merge(geoPathEnter)
-        .attr('fill', feat => vis.color(vis.colorValueByFeature(feat)))
-      // TODO: remove this tooltip and replace it with a more fancy one
-      .append('title')
-        .text(feat => feat.properties.name + ': ' + vis.colorValueByFeature(feat));
+        .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
+        // Handle tooltips and fill
+        .on('mouseover', feat => {
+          vis.tooltip.transition()
+            .duration(200)
+            .style('opacity', 1);
+          let country = vis.getDataByFeature(feat)
+          vis.tooltipBarchart.countryToRender = (country) ? country : {
+            'key': feat.properties.name,
+            'value': {
+              'confirmed': 0,
+              'deaths': 0,
+              'recovered': 0
+            }
+          };
+          vis.tooltipBarchart.update();
+        })
+        // Keep track of where tooltip is
+        .on('mousemove', d => {
+          vis.tooltip
+            .style('left', (d3.event.pageX + 20) + 'px')
+            .style('top', (d3.event.pageY) + 'px');
+        })
+        // Remove tooltip and set fill back to whatever it was before
+        .on('mouseout', d => {
+          vis.tooltip.transition()
+            .duration(200)
+            .style('opacity', 0);
+        });
 
     let colorScale = vis.color;
     let thresholds = vis.thresholds;

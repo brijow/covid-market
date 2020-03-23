@@ -18,3 +18,25 @@ html {
 .map-background {
 	fill: #385c5f;
 }
+
+div.tooltip {	
+  position: absolute;			
+  text-align: left;			
+  width: 240px;					
+  height: 180px;					
+  padding: 4px;				
+  font: 1rem sans-serif;		
+  background: #d3d3d3e6;
+  border: 0px;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}
+
+#tooltip-barchart .tick line {
+  stroke: none;
+}
+
+#tooltip-barchart text {
+  fill: black;
+  font-size: 0.8rem;
+}
