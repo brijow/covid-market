@@ -108,7 +108,10 @@ class VirusData
                 country_arry.push([index, country_data[index]]);
             }
 
-            countries_outp.push([country_name, country_arry]);
+            countries_outp.push({"name":country_name,
+                                 "data":country_arry,
+                                 "min" :country_min,
+                                 "max" :country_max});
         });
 
         return countries_outp;
