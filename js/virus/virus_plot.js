@@ -67,5 +67,9 @@ class VirusPlot extends Chart
                 country_2 = data;
             }
         });
+
+        // the following code is used to bound countries
+        country_1.data = country_1.data.slice(Math.max(country_1.data.length - vis.number_of_days, 0));
+        country_2.data = country_2.data.slice(Math.max(country_2.data.length - vis.number_of_days, 0));
     }
 }
