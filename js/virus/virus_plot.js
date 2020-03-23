@@ -14,7 +14,7 @@ class VirusPlot extends Chart
         {
             vis.dataset = dataset;
 
-            vis.update();
+            vis.render(dataset);
         });
     }
 
