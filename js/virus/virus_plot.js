@@ -9,6 +9,10 @@ class VirusPlot extends Chart
         vis.selected_country_name_2 = "Thailand";
         vis.number_of_days          = 5;
 
+        vis.visualize_confirmed     = true;
+        vis.visualize_dead          = false;
+        vis.visualize_recovered     = false;
+
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
         {
