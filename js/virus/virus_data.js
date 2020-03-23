@@ -84,6 +84,9 @@ class VirusData
             var country_data = {};
             var country_arry = [];
 
+            var country_min  = 0;
+            var country_max  = 0;
+
             file.forEach((d) =>
             {
                 if (d["Country/Region"] === country_name)
