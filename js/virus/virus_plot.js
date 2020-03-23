@@ -100,5 +100,55 @@ class VirusPlot extends Chart
             .merge(target_svg.selectAll("#virus_chart").data([null]))
                 .attr("transform", `translate(${margin.left},${margin.top})`)
                 .attr("id",        "virus_chart");
+
+        // here we are currently rendering the axes
+        const AxisScaleX = d3.scaleBand()
+            .domain(country_1.data.map(xValue))
+            .range([0, innerWidth])
+            .padding(0.25);
+
+        const AxisScaleY = d3.scaleLinear()
+            .domain([0, abs_max])
+            .range([0, innerHeight])
+            .nice();
+
+        const AxisX = d3.axisBottom(AxisScaleX)
+            .tickSize(-innerHeight)
+            .tickPadding(15);
+
+        const AxisY = d3.axisLeft(AxisScaleY)
+            .tickSize(-innerWidth)
+            .tickPadding(15);
+
+        const chartAxisX = chart.selectAll("#virus_axis_x").data([null])
+            .enter().append("g")
+            .merge(chart.selectAll("#virus_axis_x").data([null]))
+            .call(AxisX)
+            .attr("transform", `translate(0,${innerHeight})`)
+            .attr("id",        "virus_axis_x");
+        chartAxisX.selectAll(".domain").remove();
+        chartAxisX.selectAll(".virus_axis_label").data([null])
+            .enter().append("text")
+            .merge(chartAxisX.selectAll(".virus_axis_label").data([null]))
+            .attr("class", "virus_axis_label")
+            .attr("x",     innerWidth/2)
+            .attr("y",     70)
+            .text(xAxisLabel);
+
+        const chartAxisY = chart.selectAll("#virus_axis_y").data([null])
+            .enter().append("g")
+            .merge(chart.selectAll("#virus_axis_y").data([null]))
+            .call(AxisY)
+            .attr("id", "virus_axis_y");
+        chartAxisY.selectAll(".domain").remove();
+        chartAxisY.selectAll(".virus_axis_label").data([null])
+            .enter().append("text")
+            .merge(chartAxisY.selectAll(".virus_axis_label").data([null]))
+            .attr("class", "virus_axis_label")
+            .attr("x",     -innerHeight/2)
+            .attr("y",     -70)
+            .attr("transform",   "rotate(-90)")
+            .attr("text-anchor", "middle")
+            .text(yAxisLabel);
     }
 }
