@@ -27,10 +27,10 @@ class VirusPlot extends Chart
         vis.render(dataset);
     }
 
-    render()
+    render(dataset)
     {
         let vis = this;
 
-        // TODO
+        console.log(dataset);
     }
 }
