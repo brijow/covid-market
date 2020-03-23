@@ -97,6 +97,11 @@ class VirusData
                         var new_number = old_number + p[1];
 
                         country_data[p[0]] = new_number;
+
+                        if (country_max < new_number)
+                        {
+                            country_max = new_number;
+                        }
                     });
                 }
             });
