@@ -76,5 +76,13 @@ class VirusPlot extends Chart
         var target_svg    = d3.select("#virus_plot");
         var target_width  = +target_svg.attr("width");
         var target_height = +target_svg.attr("height");
+
+        var margin = { top    : 20,
+                       bottom : 60,
+                       left   : 90,
+                       right  : 40};
+
+        var innerWidth  = target_width  - margin.left - margin.right;
+        var innerHeight = target_height - margin.top  - margin.bottom;
     }
 }
