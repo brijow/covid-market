@@ -71,5 +71,10 @@ class VirusPlot extends Chart
         // the following code is used to bound countries
         country_1.data = country_1.data.slice(Math.max(country_1.data.length - vis.number_of_days, 0));
         country_2.data = country_2.data.slice(Math.max(country_2.data.length - vis.number_of_days, 0));
+
+        // the following code is used to draw our graph
+        var target_svg    = d3.select("#virus_plot");
+        var target_width  = +target_svg.attr("width");
+        var target_height = +target_svg.attr("height");
     }
 }
