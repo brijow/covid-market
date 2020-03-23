@@ -84,6 +84,9 @@ class VirusData
             var country_data = {};
             var country_arry = [];
 
+            var country_min  = 0;
+            var country_max  = 0;
+
             file.forEach((d) =>
             {
                 if (d["Country/Region"] === country_name)
@@ -94,6 +97,11 @@ class VirusData
                         var new_number = old_number + p[1];
 
                         country_data[p[0]] = new_number;
+
+                        if (country_max < new_number)
+                        {
+                            country_max = new_number;
+                        }
                     });
                 }
             });
@@ -108,7 +116,10 @@ class VirusData
                 country_arry.push([index, country_data[index]]);
             }
 
-            countries_outp.push([country_name, country_arry]);
+            countries_outp.push({"name":country_name,
+                                 "data":country_arry,
+                                 "min" :country_min,
+                                 "max" :country_max});
         });
 
         return countries_outp;
