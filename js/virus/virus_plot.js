@@ -109,7 +109,7 @@ class VirusPlot extends Chart
 
         const AxisScaleY = d3.scaleLinear()
             .domain([0, abs_max])
-            .range([0, innerHeight])
+            .range([innerHeight, 0])
             .nice();
 
         const AxisX = d3.axisBottom(AxisScaleX)
