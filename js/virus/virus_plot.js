@@ -93,5 +93,12 @@ class VirusPlot extends Chart
 
         const yValue     = d => d[1];
         const yAxisLabel = "Number of People";
+
+        // here we are currently rendering the charts
+        const chart = target_svg.selectAll("#virus_chart").data([null])
+            .enter().append("g")
+            .merge(target_svg.selectAll("#virus_chart").data([null]))
+                .attr("transform", `translate(${margin.left},${margin.top})`)
+                .attr("id",        "virus_chart");
     }
 }
