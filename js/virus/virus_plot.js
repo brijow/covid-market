@@ -31,6 +31,23 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
-        console.log(dataset);
+        // the following code is used to extract countries
+        var country_1 = null;
+        var country_2 = null;
+
+        dataset.forEach(data =>
+        {
+            if (data.name === vis.selected_country_name_1)
+            {
+                country_1 = data;
+            }
+
+            if (data.name === vis.selected_country_name_2)
+            {
+                country_2 = data;
+            }
+        });
+
+        console.log(country_1);
     }
 }
