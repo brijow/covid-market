@@ -150,5 +150,21 @@ class VirusPlot extends Chart
             .attr("transform",   "rotate(-90)")
             .attr("text-anchor", "middle")
             .text(yAxisLabel);
+
+        // here we are currently rendering the country #1
+        let c1_selection = chart.selectAll(".virus_rect_c1").data(country_1.data);
+
+        c1_selection.enter().append("rect")
+            .merge(c1_selection)
+            .attr("fill",   "blue")
+            .attr("class",  "virus_rect_c1")
+            .transition().duration(150)
+            .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/2*0)
+            .attr("width",  (d) => AxisScaleX.bandwidth()/2)
+            .transition().duration(150)
+            .attr("y",      (d) => innerHeight - AxisScaleY(yValue(d)))
+            .attr("height", (d) => AxisScaleY(yValue(d)));
+
+        c1_selection.exit().remove();
     }
 }
