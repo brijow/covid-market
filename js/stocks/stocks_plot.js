@@ -7,7 +7,7 @@ class StocksPlot extends Chart {
     const m = this.config.margin;
 
     this.g = this.svg.append('g')
-      .attr('transform', `translate(${m.left*1.2},${m.top})`);
+      .attr('transform', `translate(${m.left},${m.top})`);
 
     // Append x-axis group, place at the bottom of the chart
     this.xAxisG = this.g.append('g')
