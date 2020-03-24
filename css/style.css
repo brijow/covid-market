@@ -6,6 +6,10 @@ html {
   margin: 0px;
 }
 
+body {
+  margin: 60px;
+}
+
 .geo-path {
   stroke: #ddd;
   stroke-width: 0.1px;
@@ -39,4 +43,17 @@ div.tooltip {
 #tooltip-barchart text {
   fill: black;
   font-size: 0.8rem;
+}
+
+/*For during development*/
+.my-container {
+    border:  4px solid green;
+}
+
+.my-row {
+    border:  3px solid red;
+}
+
+.my-col {
+    border:  3px dotted blue;
 }

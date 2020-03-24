@@ -22,8 +22,9 @@ class Chart {
       .attr('width', vis.config.containerWidth);
 
     // Define what the chart is
-    vis.svg = vis.parent.append('svg')
-    	.attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+    vis.svg = vis.parent;
+    //vis.svg = vis.parent.append('svg')
+            //.attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
     // If there's anything else that relates to all components, we should handle it here.
   }

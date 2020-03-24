@@ -10,8 +10,8 @@ let mapData = new MapData({
 let map = new Map({
   parentElement: '#map',
   dataset : mapData,
-  containerWidth: 1000,
-  containerHeight: 500
+  containerWidth: "100%",
+  containerHeight: "100%"
 });
 
 //////////////////////
@@ -27,8 +27,10 @@ let virusData = new VirusData({
 
 // Instantiate virus plot (data not loaded until we call initVis())
 let virus = new VirusPlot({
-  parentElement: '#virus-plot',
-  dataset : virusData
+  parentElement: '#virus_plot',
+  dataset : virusData,
+  containerWidth: "100%",
+  containerHeight: "100%"
 });
 
 //////////////////////
@@ -41,8 +43,10 @@ let stocksData = new StocksData({
 });
 // Instantiate stocks plot (data not loaded until we call initVis())
 let stocks = new StocksPlot({
-  parentElement: '#stocks-plot',
-  dataset : stocksData
+  parentElement: '#stocks_plot',
+  dataset : stocksData,
+  containerWidth: 1200,
+  containerHeight: 200
 });
 
 // This does some Promise chaining:
