@@ -44,7 +44,7 @@ div.tooltip {
 /*For during development*/
 .my-container {
     border:  4px dotted green;
-    padding: 4rem;
+    padding: 2rem;
 }
 
 .my-row {
@@ -53,4 +53,8 @@ div.tooltip {
 
 .my-col {
     border:  2px dotted blue;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
 }
