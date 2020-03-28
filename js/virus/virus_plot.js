@@ -52,20 +52,17 @@ class VirusPlot extends Chart
         }
 
         // the following code is used to extract countries
-        var country_1 = null;
-        var country_2 = null;
+        var countries = [];
 
-        dataset.forEach(data =>
+        vis.selected_countries_array.forEach(selection =>
         {
-            if (data.name === vis.selected_country_name_1)
+            dataset.forEach(data =>
             {
-                country_1 = data;
-            }
-
-            if (data.name === vis.selected_country_name_2)
-            {
-                country_2 = data;
-            }
+                if (data.name === selection)
+                {
+                    countries.push(data);
+                }
+            });
         });
 
         // the following code is used to bound countries
