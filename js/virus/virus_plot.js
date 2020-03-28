@@ -160,14 +160,15 @@ class VirusPlot extends Chart
         for (var i=0; i<vis.selected_countries_length; i++)
         {
             let cn_selection = chart.selectAll(".virus_rect_c" + i).data(countries[i].data);
+            let cn_division  = vis.selected_countries_length;
 
             cn_selection.enter().append("rect")
                 .merge(cn_selection)
                 .attr("fill",   vis.selected_countries_color[i])
                 .attr("class",  "virus_rect_c" + i)
                 .transition().duration(150)
-                .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/2*i)
-                .attr("width",  (d) => AxisScaleX.bandwidth()/2)
+                .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/cn_division*i)
+                .attr("width",  (d) => AxisScaleX.bandwidth()/cn_division)
                 .transition().duration(150)
                 .attr("y",      (d) => innerHeight - AxisScaleY(yValue(d)))
                 .attr("height", (d) => AxisScaleY(yValue(d)));
