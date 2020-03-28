@@ -73,7 +73,7 @@ class VirusPlot extends Chart
         {
             country.data = country.data.slice(Math.max(country.data.length - vis.number_of_days, 0));
 
-            if (abs_max > country.max)
+            if (abs_max < country.max)
             {
                 abs_max = country.max;
             }
