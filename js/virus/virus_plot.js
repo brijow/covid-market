@@ -90,11 +90,8 @@ class VirusPlot extends Chart
                        left   : 90,
                        right  : 40};
 
-        var innerWidth   = target_width  - margin.left - margin.right;
-        var innerHeight  = target_height - margin.top  - margin.bottom;
-
-        var minBarHeight = 10;
-        var maxBarHeight = innerHeight;
+        var innerWidth  = target_width  - margin.left - margin.right;
+        var innerHeight = target_height - margin.top  - margin.bottom;
 
         const xValue     = d => d[0];
         const xAxisLabel = "Date";
@@ -173,8 +170,8 @@ class VirusPlot extends Chart
                 .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/cn_division*i)
                 .attr("width",  (d) => AxisScaleX.bandwidth()/cn_division)
                 .transition().duration(150)
-                .attr("y",      (d) => min(max(AxisScaleY(yValue(d)), minBarHeight), maxBarHeight);
-                .attr("height", (d) => innerHeight - min(max(AxisScaleY(yValue(d)), minBarHeight), maxBarHeight);
+                .attr("y",      (d) => AxisScaleY(yValue(d)))
+                .attr("height", (d) => innerHeight - AxisScaleY(yValue(d)));
 
             cn_selection.exit().remove();
         }
