@@ -5,13 +5,13 @@ class VirusPlot extends Chart
         super.initVis();
         let vis = this;
 
-        vis.selected_country_name_1 = "Mainland China";
-        vis.selected_country_name_2 = "Thailand";
-        vis.number_of_days          = 5;
+        vis.selected_countries_array  = ["Mainland China", "Thailand"];
+        vis.selected_countries_length = 2;
+        vis.number_of_days            = 5;
 
-        vis.visualize_confirmed     = true;
-        vis.visualize_dead          = false;
-        vis.visualize_recovered     = false;
+        vis.visualize_confirmed       = true;
+        vis.visualize_dead            = false;
+        vis.visualize_recovered       = false;
 
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
