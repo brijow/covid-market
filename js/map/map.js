@@ -58,23 +58,6 @@ class Map extends Chart {
     vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
     vis.config.dataset.initialize().then( dataset => {
-      // First, we select a single date
-      vis.selectedDate = new Date('03/11/20');
-      let filteredData = dataset.cleanedCovidDataMain.filter(d => d['ObservationDate'].toDateString() === vis.selectedDate.toDateString());
-
-      // By summing up the confirmed, deaths, and recovered cases on a single day,
-      // we can capture every single case within a specific country or region.
-      vis.dataToRender = d3.nest()
-        .key(d => d['Country/Region'])
-        .rollup(function(v) {
-          return {
-            confirmed: d3.sum(v, d => d['Confirmed']),
-            deaths: d3.sum(v, d => d['Deaths']),
-            recovered: d3.sum(v, d => d['Recovered'])
-          };
-        })
-        .entries(filteredData);
-
       vis.update();
     });
   }
@@ -82,7 +65,24 @@ class Map extends Chart {
   update() {
     let vis = this;
 
-    // TODO
+    // We get our end date from the current state's end date
+    vis.selectedDate = state.endDate;
+    let filteredData = vis.config.dataset.cleanedCovidDataMain.filter(d => d['ObservationDate'].toDateString() === vis.selectedDate.toDateString());
+
+    // By summing up the confirmed, deaths, and recovered cases on a single day,
+    // we can capture every single case within a specific country or region.
+    vis.dataToRender = d3.nest()
+      .key(d => d['Country/Region'])
+      .rollup(function(v) {
+        return {
+          confirmed: d3.sum(v, d => d['Confirmed']),
+          deaths: d3.sum(v, d => d['Deaths']),
+          recovered: d3.sum(v, d => d['Recovered'])
+        };
+      })
+      .entries(filteredData);
+
+    // TODO: support a range of dates
     vis.render();
   }
 
@@ -105,6 +105,7 @@ class Map extends Chart {
     });
 
     // Allow for zooming and panning
+    // TODO: if possible, add a range that a user can zoom
     vis.svg.call(d3.zoom().on('zoom', () => {
       vis.g.attr('transform', d3.event.transform);
     }));
