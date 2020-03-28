@@ -39,8 +39,8 @@ We have strived to keep our data processing pipeline simple and separate from ou
 | Choropleth map: data cleaning                                | 15/03/20       | 2 hours                 | 2 hours                 |
 | Choropleth map: initial rendering w/ colour legend           | 18/03/20       | 8 hours                 | 8 hours                 |
 | Choropleth map: enhanced interaction for charts embedded in tooltips | 22/03/20       | 8 hours                 | 8 hours                 |
-| Bar chart: data cleaning                                     | TODO Alan      |                         |                         |
-| Bar chart: initial rendering                                 | TODO Alan      |                         |                         |
+| Bar chart: data cleaning                                     | 18/03/20       | 4 hours                 | 5 hours                 |
+| Bar chart: initial rendering                                 | 18/03/20       | 4 hours                 | 5 hours                 |
 | Line chart: data cleaning                                    | TODO Brian     |                         |                         |
 | Line chart: initial rendering                                | TODO Brian     |                         |                         |
 | UI: arrange charts responsively                              | TODO Brian     |                         |                         |
