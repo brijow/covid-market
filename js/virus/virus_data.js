@@ -91,16 +91,24 @@ class VirusData
             {
                 if (d["Country/Region"] === country_name)
                 {
+                    var temp_min = 0;
+                    var temp_max = 0;
+
                     d["People"].forEach((p) =>
                     {
                         var old_number = country_data[p[0]] || 0;
                         var new_number = old_number + p[1];
 
-                        country_data[p[0]] = new_number;
+                        country_data[p[0]] = Math.max(new_number, temp_max);
 
                         if (country_max < new_number)
                         {
                             country_max = new_number;
+                        }
+
+                        if (temp_max < new_number)
+                        {
+                            temp_max = new_number;
                         }
                     });
                 }
