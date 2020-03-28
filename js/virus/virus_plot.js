@@ -6,6 +6,7 @@ class VirusPlot extends Chart
         let vis = this;
 
         vis.selected_countries_array  = ["Mainland China", "Thailand"];
+        vis.selected_countries_color  = ["red",            "blue"];
         vis.selected_countries_length = 2;
         vis.number_of_days            = 5;
 
@@ -155,36 +156,23 @@ class VirusPlot extends Chart
             .attr("text-anchor", "middle")
             .text(yAxisLabel);
 
-        // here we are currently rendering the country #1
-        let c1_selection = chart.selectAll(".virus_rect_c1").data(country_1.data);
+        // here we are currently rendering the countries
+        for (var i=0; i<vis.selected_countries_length; i++)
+        {
+            let cn_selection = chart.selectAll(".virus_rect_c" + i).data(countries[i].data);
 
-        c1_selection.enter().append("rect")
-            .merge(c1_selection)
-            .attr("fill",   "blue")
-            .attr("class",  "virus_rect_c1")
-            .transition().duration(150)
-            .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/2*0)
-            .attr("width",  (d) => AxisScaleX.bandwidth()/2)
-            .transition().duration(150)
-            .attr("y",      (d) => innerHeight - AxisScaleY(yValue(d)))
-            .attr("height", (d) => AxisScaleY(yValue(d)));
+            cn_selection.enter().append("rect")
+                .merge(cn_selection)
+                .attr("fill",   vis.selected_countries_color[i])
+                .attr("class",  "virus_rect_c" + i)
+                .transition().duration(150)
+                .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/2*i)
+                .attr("width",  (d) => AxisScaleX.bandwidth()/2)
+                .transition().duration(150)
+                .attr("y",      (d) => innerHeight - AxisScaleY(yValue(d)))
+                .attr("height", (d) => AxisScaleY(yValue(d)));
 
-        c1_selection.exit().remove();
-
-        // here we are currently rendering the country #2
-        let c2_selection = chart.selectAll(".virus_rect_c2").data(country_2.data);
-
-        c2_selection.enter().append("rect")
-            .merge(c2_selection)
-            .attr("fill",   "red")
-            .attr("class",  "virus_rect_c2")
-            .transition().duration(150)
-            .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/2*1)
-            .attr("width",  (d) => AxisScaleX.bandwidth()/2)
-            .transition().duration(150)
-            .attr("y",      (d) => innerHeight - AxisScaleY(yValue(d)))
-            .attr("height", (d) => AxisScaleY(yValue(d)));
-
-        c2_selection.exit().remove();
+            cn_selection.exit().remove();
+        }
     }
 }
