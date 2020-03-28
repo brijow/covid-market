@@ -66,11 +66,18 @@ class VirusPlot extends Chart
         });
 
         // the following code is used to bound countries
-        country_1.data = country_1.data.slice(Math.max(country_1.data.length - vis.number_of_days, 0));
-        country_2.data = country_2.data.slice(Math.max(country_2.data.length - vis.number_of_days, 0));
+        var abs_min = 0;
+        var abs_max = 0;
 
-        var abs_min    = 0;
-        var abs_max    = country_1.max > country_2.max ? country_1.max : country_2.max;
+        countries.forEach(country =>
+        {
+            country.data = country.data.slice(Math.max(country.data.length - vis.number_of_days, 0));
+
+            if (abs_max > country.max)
+            {
+                abs_max = country.max;
+            }
+        });
 
         // the following code is used to draw our graph
         var target_svg    = d3.select("#virus_plot");
