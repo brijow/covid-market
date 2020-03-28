@@ -107,7 +107,7 @@ class VirusPlot extends Chart
 
         // here we are currently rendering the axes
         const AxisScaleX = d3.scaleBand()
-            .domain(country_1.data.map(xValue))
+            .domain(countries[0].data.map(xValue))
             .range([0, innerWidth])
             .padding(0.25);
 
