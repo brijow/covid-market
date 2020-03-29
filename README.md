@@ -41,9 +41,9 @@ We have strived to keep our data processing pipeline simple and separate from ou
 | Choropleth map: enhanced interaction for charts embedded in tooltips | 22/03/20       | 8 hours                 | 8 hours                 |
 | Bar chart: data cleaning                                     | 18/03/20       | 4 hours                 | 5 hours                 |
 | Bar chart: initial rendering                                 | 18/03/20       | 4 hours                 | 5 hours                 |
-| Line chart: data cleaning                                    | 18/03/20       | 4 hours                 | 1 hour                  |
-| Line chart: initial rendering                                | 18/03/20       | 4 hours                 | 4 hours                 |
-| UI: arrange charts responsively                              | 18/03/20       | Was not planned         | 4 hours                 |
+| Line chart: data cleaning                                    | 21/03/20       | 4 hours                 | 1 hour                  |
+| Line chart: initial rendering                                | 21/03/20       | 4 hours                 | 4 hours                 |
+| UI: arrange charts responsively                              | 23/03/20       | Was not planned         | 4 hours                 |
 | Milestone 2 meeting                                          | 23/03/20       | 1 hour per team member  | 1 hour per team member  |
 | Milestone 2 Writeup                                          | 25/03/20       | 2 hours per team member | 2 hours per team member |
 | TODO<br />Bar chart: interactivity with radio buttons (select between "confirmed", "deaths", and "recovered") | 05/04/20       | 4 hours                 |                         |
