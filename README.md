@@ -6,9 +6,9 @@
 
 As described in our project proposal, visualization goals remain the same.  They are to allow users to:
 
-- Track and compare the rise and fall of stock prices on a daily basis
-- Explore a dataset to identify global trends of COVID-19
-- Find correlations between the spread of the virus and stock market activity.
+1. Track and compare the rise and fall of stock prices on a daily basis
+2. Explore a dataset to identify global trends of COVID-19
+3. Find correlations between the spread of the virus and stock market activity.
 
 To facilitate our first task, we chose to use a line chart with stock prices plotted vertically vs. date horizontally.  This is an immediately familiar way that people typically use to visualize stock market changes.
 
