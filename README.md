@@ -59,7 +59,7 @@ We have strived to keep our data processing pipeline simple and separate from ou
 
 - Jordan: Set up initial scaffolding of project, choropleth map implementation, m2 writeup draft
 - Brian: Helped design initial scaffolding of project, (implemented by Jordan), S&P 500 line chart implementation, some m2 writeup contribution and code cleanup, responsive UI refactor with Bootstrap 4.
-- TODO Alan:
+- Alan: Virus grouped bar chart implementation, some dataset munging, some m2 writeup contribution
 
 ### Team Process
 
