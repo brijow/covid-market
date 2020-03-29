@@ -57,7 +57,7 @@ class Map extends Chart {
     // to a data element form our COVID data that we can manipulate.
     vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
-    vis.config.dataset.initialize().then( dataset => {
+    vis.config.dataset.initialize().then(() => {
       vis.update();
     });
   }
@@ -66,8 +66,9 @@ class Map extends Chart {
     let vis = this;
 
     // We get our end date from the current state's end date
-    vis.selectedDate = state.endDate;
-    let filteredData = vis.config.dataset.cleanedCovidDataMain.filter(d => d['ObservationDate'].toDateString() === vis.selectedDate.toDateString());
+    let filteredEndData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+      d['ObservationDate'].toDateString() === state.endDate.toDateString()
+    );
 
     // By summing up the confirmed, deaths, and recovered cases on a single day,
     // we can capture every single case within a specific country or region.
@@ -80,9 +81,52 @@ class Map extends Chart {
           recovered: d3.sum(v, d => d['Recovered'])
         };
       })
-      .entries(filteredData);
+      .entries(filteredEndData);
 
-    // TODO: support a range of dates
+    // if we have a start date different from the range of our data, then
+    // we need to subtract the counts from the previous day from our
+    // data to render before we render it: 
+    if (state.startDate > DATE_START) {
+      let startDateMinusOne = new Date();
+      startDateMinusOne.setDate(state.startDate.getDate() - 1);
+
+      let filteredStartData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+        d['ObservationDate'].toDateString() === startDateMinusOne.toDateString()
+      );
+      let dataToSubtract = d3.nest()
+        .key(d => d['Country/Region'])
+        .rollup(function(v) {
+          return {
+            confirmed: d3.sum(v, d => d['Confirmed']),
+            deaths: d3.sum(v, d => d['Deaths']),
+            recovered: d3.sum(v, d => d['Recovered'])
+          };
+        })
+        .entries(filteredStartData);
+
+      dataToSubtract.forEach(d => {
+        // use d.key to find the corresponding entry in vis.dataToRender
+        let found = vis.dataToRender.find(e => e.key === d.key);
+
+        // Subtract each value of 'Confirmed', 'Deaths', and 'Recovered' of d to that corresponding entry.
+        // There may be some errors in counts, so the subtraction may result in negative counts.
+        // To prevent errors in rendering (rect elements cannot have negative y-values), we should
+        // set all negative counts to 0.
+        if (found) {
+          found.value.confirmed -= d.value.confirmed;
+          found.value.deaths    -= d.value.deaths;
+          found.value.recovered -= d.value.recovered;
+
+          if (found.value.confirmed < 0) { found.value.confirmed = 0; }
+          if (found.value.deaths < 0) { found.value.deaths = 0; }
+          if (found.value.recovered < 0) { found.value.recovered = 0; }
+
+          let foundIdx = vis.dataToRender.findIndex(e => e.key === d.key);
+          vis.dataToRender[foundIdx] = found;
+        }
+      })
+    }
+
     vis.render();
   }
 
@@ -104,11 +148,12 @@ class Map extends Chart {
       }
     });
 
-    // Allow for zooming and panning
-    // TODO: if possible, add a range that a user can zoom
-    vis.svg.call(d3.zoom().on('zoom', () => {
-      vis.g.attr('transform', d3.event.transform);
-    }));
+    // Allow for zooming and panning within a reasonable extent
+    vis.svg.call(d3.zoom()
+        .scaleExtent([1,5])
+        .on('zoom', () => {
+          vis.g.attr('transform', d3.event.transform);
+        }));
 
     let geoPath = vis.g.selectAll('.geo-path')
       .data(vis.features);
@@ -147,6 +192,7 @@ class Map extends Chart {
             .duration(200)
             .style('opacity', 0);
         });
+        // TODO: support selection of countries
 
     let colorScale = vis.color;
     let thresholds = vis.thresholds;

@@ -66,7 +66,6 @@ const state = {
     stocks.update();
   }
 };
-//console.log(state);
 
 /*
  * Instantiate Dataset objects
