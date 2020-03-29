@@ -5,9 +5,9 @@ class Chart {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 600,
       containerHeight: _config.containerHeight || 500,
+      margin: _config.margin || { top: 20, bottom: 50, right: 20, left: 50 },
       dataset: _config.dataset
     }
-    this.config.margin = _config.margin || { top: 20, bottom: 50, right: 20, left: 50 }
   }
 
   initVis() {
@@ -23,8 +23,6 @@ class Chart {
 
     // Define what the chart is
     vis.svg = vis.parent;
-    //vis.svg = vis.parent.append('svg')
-            //.attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
     // If there's anything else that relates to all components, we should handle it here.
   }

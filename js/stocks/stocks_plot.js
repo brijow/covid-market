@@ -1,56 +1,51 @@
 class StocksPlot extends Chart {
 
-  constructor(_config) {
-    super(_config);
+  initVis() {
     super.initVis(); // TODO: refactor super constructor and initVis and then remove this line
+    let vis = this;
+    const m = vis.config.margin;
 
-    const m = this.config.margin;
-
-    this.g = this.svg.append('g')
+    vis.g = vis.svg.append('g')
       .attr('transform', `translate(${m.left},${m.top})`);
 
     // Append x-axis group, place at the bottom of the chart
-    this.xAxisG = this.g.append('g')
-        .attr('transform', `translate(0,${this.height})`);
+    vis.xAxisG = vis.g.append('g')
+        .attr('transform', `translate(0,${vis.height})`);
 
     // Append y-axis group and append add a label to it (a text svg)
-    this.yAxisG = this.g.append('g');
+    vis.yAxisG = vis.g.append('g');
 
     // Define scales and axes
     // Note: we need to define their domains in initVis() after data is available
-    this.xScale = d3.scaleTime().range([0, this.width]);
-    this.yScale = d3.scaleLinear().range([this.height, 0]);
+    vis.xScale = d3.scaleTime().range([0, vis.width]);
+    vis.yScale = d3.scaleLinear().range([vis.height, 0]);
 
-    this.xAxis = d3.axisBottom(this.xScale)
+    vis.xAxis = d3.axisBottom(vis.xScale)
       .tickFormat(d3.timeFormat("%y-%b-%d"));
-    this.yAxis = d3.axisLeft(this.yScale);
-  } // end of constructor
-
-  initVis() {
-    let vis = this;
+    vis.yAxis = d3.axisLeft(vis.yScale);
 
     // Promise chaining: dataset has its own initialize() method we wait for
     vis.config.dataset.initialize().then( dataset => {
 
     const initStockPlot1Axis = () => {
-        // Now that the data is available, we can set the domains for our scales and draw axes
-        const dateExtent = d3.extent(vis.activeSnpData.map( d => {
-            return d["Date"] }));
-        vis.xScale.domain(dateExtent);
+      // Now that the data is available, we can set the domains for our scales and draw axes
+      const dateExtent = d3.extent(vis.activeSnpData.map( d => {
+          return d["Date"] }));
+      vis.xScale.domain(dateExtent);
 
-        // TODO: change this extent to be defined from multiple stock price data sources
-        const highPriceExtent = d3.extent(vis.activeSnpData.map( d => {
-            return d["High"] }));
-        vis.yScale.domain([highPriceExtent[0]*(0.9), highPriceExtent[1]]).nice();
+      // TODO: change this extent to be defined from multiple stock price data sources
+      const highPriceExtent = d3.extent(vis.activeSnpData.map( d => {
+          return d["High"] }));
+      vis.yScale.domain([highPriceExtent[0]*(0.9), highPriceExtent[1]]).nice();
 
-        vis.yAxisG.call(vis.yAxis);
-        vis.xAxisG.call(vis.xAxis)
-          .selectAll(".tick text")
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", ".15em")
+      vis.yAxisG.call(vis.yAxis);
+      vis.xAxisG.call(vis.xAxis)
+        .selectAll(".tick text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
           .attr('transform', `rotate(-45)`);
-      }
+    }
 
       // Use all data as default
       vis.activeSnpData = dataset.snpData;
