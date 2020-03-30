@@ -164,6 +164,7 @@ class Map extends Chart {
 
     geoPath.merge(geoPathEnter)
         .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
+        // TODO: handle whether a country is selected
         // Handle tooltips and fill
         .on('mouseover', feat => {
           vis.tooltip.transition()
@@ -193,6 +194,10 @@ class Map extends Chart {
             .style('opacity', 0);
         });
         // TODO: support selection of countries
+        // First, get  the country NAME by the feature NAME
+        // Then add it to the selected country list.
+        // Don't set the fill using the on-click listener.
+        // The fill should be set when the update() method is called.
 
     let colorScale = vis.color;
     let thresholds = vis.thresholds;
