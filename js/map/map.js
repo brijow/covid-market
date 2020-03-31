@@ -57,9 +57,7 @@ class Map extends Chart {
     // to a data element form our COVID data that we can manipulate.
     vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
-    vis.config.dataset.initialize().then(() => {
-      vis.update();
-    });
+    vis.config.dataset.initialize().then(() => { vis.update(); });
   }
 
   update() {
@@ -163,8 +161,14 @@ class Map extends Chart {
         .attr('d', vis.path)
 
     geoPath.merge(geoPathEnter)
+        // If a country is in seletedCountries, add this class to it.  Otherwise do not.
+        .classed('selected-country', feat => {
+          let country = vis.getDataByFeature(feat);
+          if (!country) { country = { 'key': feat.properties.name }; }
+          return state.selectedCountries.includes(country.key);
+        })
         .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
-        // TODO: handle whether a country is selected
+
         // Handle tooltips and fill
         .on('mouseover', feat => {
           vis.tooltip.transition()
@@ -182,22 +186,32 @@ class Map extends Chart {
           vis.tooltipBarchart.update();
         })
         // Keep track of where tooltip is
-        .on('mousemove', d => {
+        .on('mousemove', feat => {
           vis.tooltip
             .style('left', (d3.event.pageX + 20) + 'px')
             .style('top', (d3.event.pageY) + 'px');
         })
         // Remove tooltip and set fill back to whatever it was before
-        .on('mouseout', d => {
+        .on('mouseout', feat => {
           vis.tooltip.transition()
             .duration(200)
             .style('opacity', 0);
+        })
+        .on('click', feat => {
+          // First, get  the country NAME by the feature NAME
+          // If the country is in state.selectedCountries, remove it from the list
+          // Else if the country is not in state.selectedCountries, try to add it to the list.
+          // Don't set the fill using the on-click listener.
+          let country = vis.getDataByFeature(feat);
+          if (!country) { country = { 'key': feat.properties.name }; }
+          let countryName = country.key;
+
+          if (state.selectedCountries.includes(countryName)) {
+            state.removeSelectedCountry(countryName);
+          } else {
+            state.addSelectedCountry(countryName);
+          }
         });
-        // TODO: support selection of countries
-        // First, get  the country NAME by the feature NAME
-        // Then add it to the selected country list.
-        // Don't set the fill using the on-click listener.
-        // The fill should be set when the update() method is called.
 
     let colorScale = vis.color;
     let thresholds = vis.thresholds;
