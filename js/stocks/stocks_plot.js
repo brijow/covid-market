@@ -15,6 +15,12 @@ class StocksPlot extends Chart {
     // Append y-axis group and append add a label to it (a text svg)
     vis.yAxisG = vis.g.append('g');
 
+    vis.brushG = vis.g.append('g')
+      .attr("class", "brush")
+      .call(d3.brushX()
+          .extent([[0,0], [vis.width, vis.height]])
+          .on("brush", null)); // TODO: change null to a function that sets global state object's date attributes
+
     // Define scales and axes
     // Note: we need to define their domains in initVis() after data is available
     vis.xScale = d3.scaleTime().range([0, vis.width]);
