@@ -41,6 +41,12 @@ div.tooltip {
   font-size: 0.8rem;
 }
 
+.selected-country {
+  fill: #ffbcc8;
+  stroke: #3e3d3d;
+  stroke-width: 0.8px;
+}
+
 /*For during development*/
 .my-container {
     border:  4px dotted green;

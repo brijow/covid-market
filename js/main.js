@@ -42,7 +42,7 @@ const state = {
   },
 
   addSelectedCountry: function(country) {
-    if (this.selectedCountries.length < MAX_COUNTRIES && !this.selectedCountries.contains(country)) {
+    if (this.selectedCountries.length < MAX_COUNTRIES && !this.selectedCountries.includes(country)) {
       this.selectedCountries.push(country);
       this.updateAll();
     }
@@ -66,7 +66,6 @@ const state = {
     stocks.update();
   }
 };
-//console.log(state);
 
 /*
  * Instantiate Dataset objects

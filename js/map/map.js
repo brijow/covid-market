@@ -57,17 +57,16 @@ class Map extends Chart {
     // to a data element form our COVID data that we can manipulate.
     vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
-    vis.config.dataset.initialize().then( dataset => {
-      vis.update();
-    });
+    vis.config.dataset.initialize().then(() => { vis.update(); });
   }
 
   update() {
     let vis = this;
 
     // We get our end date from the current state's end date
-    vis.selectedDate = state.endDate;
-    let filteredData = vis.config.dataset.cleanedCovidDataMain.filter(d => d['ObservationDate'].toDateString() === vis.selectedDate.toDateString());
+    let filteredEndData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+      d['ObservationDate'].toDateString() === state.endDate.toDateString()
+    );
 
     // By summing up the confirmed, deaths, and recovered cases on a single day,
     // we can capture every single case within a specific country or region.
@@ -80,9 +79,52 @@ class Map extends Chart {
           recovered: d3.sum(v, d => d['Recovered'])
         };
       })
-      .entries(filteredData);
+      .entries(filteredEndData);
 
-    // TODO: support a range of dates
+    // if we have a start date different from the range of our data, then
+    // we need to subtract the counts from the previous day from our
+    // data to render before we render it: 
+    if (state.startDate > DATE_START) {
+      let startDateMinusOne = new Date();
+      startDateMinusOne.setDate(state.startDate.getDate() - 1);
+
+      let filteredStartData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+        d['ObservationDate'].toDateString() === startDateMinusOne.toDateString()
+      );
+      let dataToSubtract = d3.nest()
+        .key(d => d['Country/Region'])
+        .rollup(function(v) {
+          return {
+            confirmed: d3.sum(v, d => d['Confirmed']),
+            deaths: d3.sum(v, d => d['Deaths']),
+            recovered: d3.sum(v, d => d['Recovered'])
+          };
+        })
+        .entries(filteredStartData);
+
+      dataToSubtract.forEach(d => {
+        // use d.key to find the corresponding entry in vis.dataToRender
+        let found = vis.dataToRender.find(e => e.key === d.key);
+
+        // Subtract each value of 'Confirmed', 'Deaths', and 'Recovered' of d to that corresponding entry.
+        // There may be some errors in counts, so the subtraction may result in negative counts.
+        // To prevent errors in rendering (rect elements cannot have negative y-values), we should
+        // set all negative counts to 0.
+        if (found) {
+          found.value.confirmed -= d.value.confirmed;
+          found.value.deaths    -= d.value.deaths;
+          found.value.recovered -= d.value.recovered;
+
+          if (found.value.confirmed < 0) { found.value.confirmed = 0; }
+          if (found.value.deaths < 0) { found.value.deaths = 0; }
+          if (found.value.recovered < 0) { found.value.recovered = 0; }
+
+          let foundIdx = vis.dataToRender.findIndex(e => e.key === d.key);
+          vis.dataToRender[foundIdx] = found;
+        }
+      })
+    }
+
     vis.render();
   }
 
@@ -104,11 +146,12 @@ class Map extends Chart {
       }
     });
 
-    // Allow for zooming and panning
-    // TODO: if possible, add a range that a user can zoom
-    vis.svg.call(d3.zoom().on('zoom', () => {
-      vis.g.attr('transform', d3.event.transform);
-    }));
+    // Allow for zooming and panning within a reasonable extent
+    vis.svg.call(d3.zoom()
+        .scaleExtent([1,5])
+        .on('zoom', () => {
+          vis.g.attr('transform', d3.event.transform);
+        }));
 
     let geoPath = vis.g.selectAll('.geo-path')
       .data(vis.features);
@@ -118,7 +161,14 @@ class Map extends Chart {
         .attr('d', vis.path)
 
     geoPath.merge(geoPathEnter)
+        // If a country is in seletedCountries, add this class to it.  Otherwise do not.
+        .classed('selected-country', feat => {
+          let country = vis.getDataByFeature(feat);
+          if (!country) { country = { 'key': feat.properties.name }; }
+          return state.selectedCountries.includes(country.key);
+        })
         .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
+
         // Handle tooltips and fill
         .on('mouseover', feat => {
           vis.tooltip.transition()
@@ -136,16 +186,31 @@ class Map extends Chart {
           vis.tooltipBarchart.update();
         })
         // Keep track of where tooltip is
-        .on('mousemove', d => {
+        .on('mousemove', feat => {
           vis.tooltip
             .style('left', (d3.event.pageX + 20) + 'px')
             .style('top', (d3.event.pageY) + 'px');
         })
         // Remove tooltip and set fill back to whatever it was before
-        .on('mouseout', d => {
+        .on('mouseout', feat => {
           vis.tooltip.transition()
             .duration(200)
             .style('opacity', 0);
+        })
+        .on('click', feat => {
+          // First, get  the country NAME by the feature NAME
+          // If the country is in state.selectedCountries, remove it from the list
+          // Else if the country is not in state.selectedCountries, try to add it to the list.
+          // Don't set the fill using the on-click listener.
+          let country = vis.getDataByFeature(feat);
+          if (!country) { country = { 'key': feat.properties.name }; }
+          let countryName = country.key;
+
+          if (state.selectedCountries.includes(countryName)) {
+            state.removeSelectedCountry(countryName);
+          } else {
+            state.addSelectedCountry(countryName);
+          }
         });
 
     let colorScale = vis.color;
