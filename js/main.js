@@ -62,8 +62,8 @@ const state = {
 
   updateAll: function() {
     map.update();
-    virus.update();
-    stocks.update();
+    //virus.update(); TODO: uncomment when virus.update() works: BUG: when calling virus.update(), it complains that vis.dataset is unavailable.
+    //stocks.update(); TODO: uncomment when/if stocks.update() is implemented (may not be necessary to update as dates don't change and currently no country data)
   }
 };
 
