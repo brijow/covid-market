@@ -10,7 +10,8 @@ class StocksPlot extends Chart {
 
     // Append x-axis group, place at the bottom of the chart
     vis.xAxisG = vis.g.append('g')
-        .attr('transform', `translate(0,${vis.height})`);
+      .attr("class", "x-axis")
+      .attr('transform', `translate(0,${vis.height})`);
 
     // Append y-axis group and append add a label to it (a text svg)
     vis.yAxisG = vis.g.append('g');
