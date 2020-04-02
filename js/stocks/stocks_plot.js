@@ -10,7 +10,8 @@ class StocksPlot extends Chart {
 
     // Append x-axis group, place at the bottom of the chart
     vis.xAxisG = vis.g.append('g')
-        .attr('transform', `translate(0,${vis.height})`);
+      .attr("class", "x-axis")
+      .attr('transform', `translate(0,${vis.height})`);
 
     // Append y-axis group and append add a label to it (a text svg)
     vis.yAxisG = vis.g.append('g');
@@ -35,7 +36,7 @@ class StocksPlot extends Chart {
     vis.yScale = d3.scaleLinear().range([vis.height, 0]);
 
     vis.xAxis = d3.axisBottom(vis.xScale)
-      .tickFormat(d3.timeFormat("%y-%b-%d"));
+      .tickFormat(d3.timeFormat("%m/%d/%y"));
     vis.yAxis = d3.axisLeft(vis.yScale);
 
     // Promise chaining: dataset has its own initialize() method we wait for
@@ -54,11 +55,7 @@ class StocksPlot extends Chart {
 
       vis.yAxisG.call(vis.yAxis);
       vis.xAxisG.call(vis.xAxis)
-        .selectAll(".tick text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-          .attr('transform', `rotate(-45)`);
+        .selectAll(".tick text");
     }
 
       // Use all data as default
