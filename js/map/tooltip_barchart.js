@@ -33,7 +33,7 @@ class TooltipBarchart extends Chart {
     const statuses = ['confirmed', 'deaths', 'recovered'];
     vis.barColor = d3.scaleOrdinal()
       .domain(statuses)
-      .range(['#95b833', '#e72525', '#4cb082'])
+      .range(['#fec44f', '#e72525', '#4cb082'])
     vis.colorValue = d => d.key;
 
     // Set up y-axis, with the expected keys: confirmed, deaths, and recovered
@@ -61,7 +61,7 @@ class TooltipBarchart extends Chart {
     vis.xScale = d3.scaleLinear()
         .domain([0, 0]) // The domain of the x-axis will change depending on the data rendered
                         // This change is handled in the update() method.
-        .range([0, vis.width])
+        .range([0, vis.width - vis.config.margin.right * 2])
         .nice();
     // Temporary labels for x axis
     const xAxisG = vis.g.append('g')
