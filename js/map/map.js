@@ -6,8 +6,26 @@ class Map extends Chart {
 
     vis.g = vis.svg.append('g');
 
+    // Set title
+    vis.mapTitleG = vis.svg.append('g')
+      .attr('transform', `translate(-100,-260)`)
+    vis.mapTitleG.append('rect')
+        .attr('width', '100%')
+        .attr('height', 100)
+        .attr('fill', '#f8f9fa');
+    vis.mapTitleG.append('text')
+        .attr('class', 'map-title-text')
+        .attr('x', 150)
+        .attr('y', 100 / 2 + 10)
+        .attr('text-anchor', 'center')
+        .attr('text-decoration', 'underline')
+        .attr('font-weight', 'bold')
+        .attr('font-size', '2rem');
+
+    // Declare group for colour legend
     vis.colorLegendG = vis.svg.append('g')
-      .attr('transform', `translate(30, 300)`);
+      .attr('class', 'map-color-legend')
+      .attr('transform', `translate(0, 350)`);
 
     // Initialize projection and paths for map
     vis.projection = d3.geoNaturalEarth1();
@@ -125,6 +143,13 @@ class Map extends Chart {
       })
     }
 
+    // Update title of map
+    d3.select('text.map-title-text')
+        .text('COVID-19 cases by country from '
+            + state.startDate.toLocaleDateString()
+            + ' to '
+            + state.endDate.toLocaleDateString());
+
     vis.render();
   }
 
@@ -147,11 +172,17 @@ class Map extends Chart {
     });
 
     // Allow for zooming and panning within a reasonable extent
-    vis.svg.call(d3.zoom()
-        .scaleExtent([1,5])
+    let zoom = d3.zoom()
+        .scaleExtent([1.3,5])
         .on('zoom', () => {
           vis.g.attr('transform', d3.event.transform);
-        }));
+        });
+
+    // Set default zoom level to fill up the panel of the map
+    vis.svg.call(zoom)
+        .call(zoom.transform, d3.zoomIdentity.translate(-175,-100).scale(1.4))
+        .append('svg:g')
+        .attr('transform', 'scale(1,1)');
 
     let geoPath = vis.g.selectAll('.geo-path')
       .data(vis.features);
@@ -217,10 +248,10 @@ class Map extends Chart {
     let thresholds = vis.thresholds;
     vis.colorLegendG.call(mapColorLegend, {
       colorScale,
-      circleRadius: 8,
-      spacing: 20,
-      textOffset: 10,
-      backgroundRectWidth: 250,
+      circleRadius: 12,
+      spacing: 30,
+      textOffset: 15,
+      backgroundRectWidth: 350,
       titleText: 'Number of confirmed cases',
       thresholds: thresholds
     });

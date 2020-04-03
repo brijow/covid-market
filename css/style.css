@@ -11,6 +11,10 @@ html {
   stroke-width: 0.1px;
 }
 
+.map-color-legend text {
+  font-size: 1.5rem;
+}
+
 .geo-path:hover {
 	fill: #5fc7c5;
 }
@@ -22,7 +26,7 @@ html {
 div.tooltip {	
   position: absolute;			
   text-align: left;			
-  width: 240px;					
+  width: 250px;					
   height: 180px;					
   padding: 4px;				
   font: 1rem sans-serif;		
