@@ -6,6 +6,23 @@ class Map extends Chart {
 
     vis.g = vis.svg.append('g');
 
+    // Set title
+    vis.mapTitleG = vis.svg.append('g')
+      .attr('transform', `translate(-100,-260)`)
+    vis.mapTitleG.append('rect')
+        .attr('width', '100%')
+        .attr('height', 100)
+        .attr('fill', '#f8f9fa');
+    vis.mapTitleG.append('text')
+        .attr('class', 'map-title-text')
+        .attr('x', 150)
+        .attr('y', 100 / 2 + 10)
+        .attr('text-anchor', 'center')
+        .attr('text-decoration', 'underline')
+        .attr('font-weight', 'bold')
+        .attr('font-size', '2rem');
+
+    // Declare group for colour legend
     vis.colorLegendG = vis.svg.append('g')
       .attr('class', 'map-color-legend')
       .attr('transform', `translate(0, 350)`);
@@ -125,6 +142,13 @@ class Map extends Chart {
         }
       })
     }
+
+    // Update title of map
+    d3.select('text.map-title-text')
+        .text('COVID-19 cases by country from '
+            + state.startDate.toLocaleDateString()
+            + ' to '
+            + state.endDate.toLocaleDateString());
 
     vis.render();
   }
