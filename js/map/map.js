@@ -104,7 +104,8 @@ class Map extends Chart {
     // data to render before we render it: 
     if (state.startDate > DATE_START) {
       let startDateMinusOne = new Date();
-      startDateMinusOne.setDate(state.startDate.getDate() - 1);
+      let dateOffset = (24*60*60*1000); // 1 day
+      startDateMinusOne.setTime(state.startDate.getTime() - dateOffset);
 
       let filteredStartData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
         d['ObservationDate'].toDateString() === startDateMinusOne.toDateString()
@@ -164,12 +165,12 @@ class Map extends Chart {
     // This function prints out the names of all countries for which a matching country
     // cannot be found in our TOPOJson file.  This can be removed once our project is
     // complete.
-    vis.dataToRender.forEach(d => {
-      let country = vis.features.filter(feat => feat.properties.name === d.key);
-      if (country.length === 0) {
-        console.log('Could not find: ' + d.key);
-      }
-    });
+    // vis.dataToRender.forEach(d => {
+    //   let country = vis.features.filter(feat => feat.properties.name === d.key);
+    //   if (country.length === 0) {
+    //     console.log('Could not find: ' + d.key);
+    //   }
+    // });
 
     // Allow for zooming and panning within a reasonable extent
     let zoom = d3.zoom()
