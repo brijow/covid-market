@@ -61,7 +61,7 @@ class TooltipBarchart extends Chart {
     vis.xScale = d3.scaleLinear()
         .domain([0, 0]) // The domain of the x-axis will change depending on the data rendered
                         // This change is handled in the update() method.
-        .range([0, vis.width - vis.config.margin.right * 2])
+        .range([0, vis.width - vis.config.margin.right])
         .nice();
     // Temporary labels for x axis
     const xAxisG = vis.g.append('g')

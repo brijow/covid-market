@@ -11,6 +11,10 @@ html {
   stroke-width: 0.1px;
 }
 
+.map-color-legend text {
+  font-size: 1.5rem;
+}
+
 .geo-path:hover {
 	fill: #5fc7c5;
 }
