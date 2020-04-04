@@ -53,7 +53,7 @@ class StocksPlot extends Chart {
         const highPriceExtent = d3.extent(mergedData.map( d => {
             return d["price"]
         }));
-        vis.yScale.domain([highPriceExtent[0]*(0.9), highPriceExtent[1]]).nice();
+        vis.yScale.domain([highPriceExtent[0], highPriceExtent[1]]).nice();
 
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
@@ -70,8 +70,11 @@ class StocksPlot extends Chart {
       // Use all data as default
       vis.activeSnpData = dataset.snpData;
       vis.activeDjiData = dataset.djiData;
+      vis.activeGoldData = dataset.goldData;
+      vis.activeOilData = dataset.oilData;
 
-      initStockPlot1Axis(d3.merge([vis.activeDjiData, vis.activeSnpData]));
+      initStockPlot1Axis(d3.merge([vis.activeDjiData, vis.activeSnpData,
+                                   vis.activeGoldData, vis.activeOilData ]));
       vis.render();
     });
   }
@@ -89,7 +92,7 @@ class StocksPlot extends Chart {
           .attr("stroke", colo_str)
           .attr("stroke-linejoin", "round")
           .attr("stroke-linecap", "round")
-          .attr("stroke-width", 3)
+          .attr("stroke-width", 2)
           .attr("d", d3.line()
             .x( d => { return vis.xScale(d['date'])} )
             .y( d => { return vis.yScale(d['price'])}));
@@ -106,7 +109,9 @@ class StocksPlot extends Chart {
     }
 
     draw_line(vis.activeSnpData, ".snpline", "steelblue");
-    draw_line(vis.activeDjiData, ".djiline", "green");
+    draw_line(vis.activeDjiData, ".djiline", "red");
+    draw_line(vis.activeGoldData, ".goldline", "orange");
+    draw_line(vis.activeOilData, ".oilline", "green");
 
       // Add 5 horizontal grid lines for readibility
       vis.g.append("g")

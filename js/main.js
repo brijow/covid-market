@@ -84,7 +84,11 @@ const stocksData = new StocksData({
   files: [ { file:  'data/s_p_500.csv',
              label: 'S&P 500' },
            { file:  'data/dow_jones.csv',
-             label: 'DOW JONES' } ],
+             label: 'DOW JONES' },
+           { file:  'data/gold.csv',
+             label: 'GOLD' },
+           { file:  'data/crude_oil.csv',
+             label: 'CRUDE OIL' } ],
   minDate: DATE_START,
   maxDate: DATE_END
 });
