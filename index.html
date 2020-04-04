@@ -48,22 +48,33 @@
         <div class="container-fluid my-container h-100">
 
             <div class="row my-row text-center h-100">
+                <div class="row-12 my-row text-center w-100">
+                    <h6>S&P 500</h6>
+                </div>
                 <svg class="h-100 w-100 text-dark" id="stocks_plot"
-                     viewBox="0 0 1200 200" perserveAspectRatio="xMinYMid">
+                                                   viewBox="0 0 1200 200" perserveAspectRatio="xMinYMid">
                 </svg>
             </div>
 
             <div class="row my-row text-center h-100">
                 <!--Map-->
                 <div class="col-12 col-md-6 map">
+                    <div class="row-12 my-row text-center w-100">
+                        <h6 class="map-title">COVID-19 World Map</h6>
+                    </div>
+                    <div class="row-12 my-row text-center w-100">
                     <svg class="h-100 w-100" id="map"
-                         viewBox="-100 0 1200 500" perserveAspectRatio="xMinYMid">
+                         viewBox="0 0 1200 600" perserveAspectRatio="xMinYMid">
                     </svg>
+                    </div>
                 </div>
                  <!--Grouped bar chart-->
-                <div class="col-12 col-md-6 my-col">
+                <div class="col-12 col-md-6 my-col virus">
+                    <div class="row-12 my-row text-center w-100">
+                        <h6>COVID-19 Grouped By Country</h6>
+                    </div>
                     <svg class="h-100 w-100 text-dark" id="virus_plot"
-                         viewBox="0 -60 800 700" perserveAspectRatio="xMinYMid">
+                         viewBox="0 0 1200 600" perserveAspectRatio="xMinYMid">
                     </svg>
                 </div>
             </div>
