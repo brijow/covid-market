@@ -35,11 +35,20 @@ class StocksPlot extends Chart {
       state.setStartDate(x0);
       state.setEndDate(x1);
     };
+    const brushended = () => {
+      const selection = d3.event.selection;
+      if (!d3.event.sourceEvent || !selection) {
+          state.setStartDate(DATE_START);
+          state.setEndDate(DATE_END);
+          return;
+      }
+    };
     vis.brushG = vis.g.append('g')
       .attr("class", "brush")
       .call(d3.brushX()
           .extent([[0,0], [vis.width, vis.height]])
-          .on("brush", brushed));
+          .on("brush", brushed)
+          .on("end", brushended));
 
     // Promise chaining: dataset has its own initialize() method we wait for
     vis.config.dataset.initialize().then( dataset => {
