@@ -22,6 +22,10 @@ class Map extends Chart {
         .attr('class', 'map-background')
         .attr('d', vis.path({type: 'Sphere'}));
 
+    vis.visualize_confirmed = false;
+    vis.visualize_dead      = false;
+    vis.visualize_recovered = true;
+
     // Set thresholds for colour value
     // Adapted from Mike Bostock's threshold choropleth:
     // https://observablehq.com/@d3/threshold-choropleth
@@ -29,7 +33,12 @@ class Map extends Chart {
     vis.color = d3.scaleThreshold()
       .domain(vis.thresholds)
       .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
-    vis.colorValue = d => d ? d.value.confirmed : 0;
+    vis.colorValue = d => {
+      if (!d) { return 0; }
+      else if (vis.visualize_recovered) { return d.value.recovered; }
+      else if (vis.visualize_dead) { return d.value.deaths; }
+      else { return d.value.confirmed; }
+    };
 
     // Create and draw colour legend
     let colorScale = vis.color;
@@ -39,8 +48,8 @@ class Map extends Chart {
       circleRadius: 12,
       spacing: 30,
       textOffset: 15,
-      backgroundRectWidth: 350,
-      titleText: 'Number of confirmed cases',
+      backgroundRectWidth: 250,
+      titleText: 'Number of cases',
       thresholds: thresholds
     });
 
@@ -142,11 +151,18 @@ class Map extends Chart {
     }
 
     // Update title of map
+    let titlePreamble = vis.visualize_confirmed 
+      ? 'Confirmed COVID-19 cases from '
+      : vis.visualize_dead
+        ? 'COVID-19 deaths from '
+        : 'Recovered COVID-19 cases from '
     d3.select('h5.map-title')
-        .text('Confirmed COVID-19 cases from '
+        .text(
+            titlePreamble
             + state.startDate.toLocaleDateString()
             + ' to '
-            + state.endDate.toLocaleDateString());
+            + state.endDate.toLocaleDateString()
+          );
 
     vis.render();
   }

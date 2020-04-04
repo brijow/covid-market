@@ -153,6 +153,11 @@ $(document).ready(function()
             virus.visualize_dead      = false;
             virus.visualize_recovered = false;
             virus.update();
+
+            map.visualize_confirmed = true;
+            map.visualize_dead      = false;
+            map.visualize_recovered = false;
+            map.update();
         }
 
         if (selected_value === "dead")
@@ -161,6 +166,11 @@ $(document).ready(function()
             virus.visualize_dead      = true;
             virus.visualize_recovered = false;
             virus.update();
+
+            map.visualize_confirmed = false;
+            map.visualize_dead      = true;
+            map.visualize_recovered = false;
+            map.update();
         }
 
         if (selected_value === "recovered")
@@ -169,6 +179,11 @@ $(document).ready(function()
             virus.visualize_dead      = false;
             virus.visualize_recovered = true;
             virus.update();
+
+            map.visualize_confirmed = false;
+            map.visualize_dead      = false;
+            map.visualize_recovered = true;
+            map.update();
         }
     });
 });
