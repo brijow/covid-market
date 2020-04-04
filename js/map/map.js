@@ -22,25 +22,29 @@ class Map extends Chart {
         .attr('class', 'map-background')
         .attr('d', vis.path({type: 'Sphere'}));
 
+    vis.visualize_confirmed = false;
+    vis.visualize_dead      = false;
+    vis.visualize_recovered = true;
+
     // Set thresholds for colour value
     // Adapted from Mike Bostock's threshold choropleth:
     // https://observablehq.com/@d3/threshold-choropleth
     vis.thresholds = [0,1,11,101,1001,10001];
-    vis.color = d3.scaleThreshold()
-      .domain(vis.thresholds)
-      .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
-    vis.colorValue = d => d ? d.value.confirmed : 0;
+    vis.colorValue = d => {
+      if (!d) { return 0; }
+      else if (vis.visualize_recovered) { return d.value.recovered; }
+      else if (vis.visualize_dead) { return d.value.deaths; }
+      else { return d.value.confirmed; }
+    };
 
     // Create and draw colour legend
-    let colorScale = vis.color;
     let thresholds = vis.thresholds;
     vis.colorLegendG.call(mapColorLegend, {
-      colorScale,
       circleRadius: 12,
       spacing: 30,
       textOffset: 15,
-      backgroundRectWidth: 350,
-      titleText: 'Number of confirmed cases',
+      backgroundRectWidth: 250,
+      titleText: 'Number of cases',
       thresholds: thresholds
     });
 
@@ -141,12 +145,38 @@ class Map extends Chart {
       })
     }
 
+    // Based on what data we are visualizing, change the color scheme.
+    // Yellow = confirmed
+    // Green = recovered
+    // Red = deaths
+    let colorScheme = vis.visualize_confirmed
+        ? d3.schemeYlOrBr[vis.thresholds.length+1]
+        : vis.visualize_dead
+          ? d3.schemeOrRd[vis.thresholds.length+1]
+          : d3.schemeBuGn[vis.thresholds.length+1];
+    vis.color = d3.scaleThreshold()
+      .domain(vis.thresholds)
+      .range(colorScheme);
+
+    // Also change the color scheme of the legend
+    for (let i = 1; i <= vis.thresholds.length; i++) {
+      d3.select('.color-legend-circle-' + (i-1))
+          .attr('fill', colorScheme[i]);
+    }
+
     // Update title of map
+    let titlePreamble = vis.visualize_confirmed 
+      ? 'Confirmed COVID-19 cases from '
+      : vis.visualize_dead
+        ? 'COVID-19 deaths from '
+        : 'Recovered COVID-19 cases from '
     d3.select('h5.map-title')
-        .text('Confirmed COVID-19 cases from '
+        .text(
+            titlePreamble
             + state.startDate.toLocaleDateString()
             + ' to '
-            + state.endDate.toLocaleDateString());
+            + state.endDate.toLocaleDateString()
+          );
 
     vis.render();
   }
