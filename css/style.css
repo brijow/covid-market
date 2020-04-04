@@ -23,17 +23,17 @@ html {
 	fill: #385c5f;
 }
 
-div.tooltip {	
-  position: absolute;			
-  text-align: left;			
-  width: 250px;					
-  height: 180px;					
-  padding: 4px;				
-  font: 1rem sans-serif;		
+div.tooltip {
+  position: absolute;
+  text-align: left;
+  width: 250px;
+  height: 180px;
+  padding: 4px;
+  font: 1rem sans-serif;
   background: #d3d3d3e6;
-  border: 0px;		
-  border-radius: 8px;			
-  pointer-events: none;			
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
 }
 
 #tooltip-barchart .tick line {
@@ -77,4 +77,20 @@ div .map {
 div .virus {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+/*For Alan's virus chart*/
+#virus_axis_x
+{
+    fill: #000;
+}
+
+#virus_axis_y
+{
+    fill: #000;
+}
+
+.virus_axis_label
+{
+    fill: #000;
 }
