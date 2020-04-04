@@ -31,6 +31,19 @@ class Map extends Chart {
       .range(d3.schemeYlOrBr[vis.thresholds.length+1]);
     vis.colorValue = d => d ? d.value.confirmed : 0;
 
+    // Create and draw colour legend
+    let colorScale = vis.color;
+    let thresholds = vis.thresholds;
+    vis.colorLegendG.call(mapColorLegend, {
+      colorScale,
+      circleRadius: 12,
+      spacing: 30,
+      textOffset: 15,
+      backgroundRectWidth: 350,
+      titleText: 'Number of confirmed cases',
+      thresholds: thresholds
+    });
+
     // Set up stylings for tooltips
     // Ideally, we'd want something like this for the end result:
     // https://bl.ocks.org/maelafifi/ee7fecf90bb5060d5f9a7551271f4397
@@ -130,7 +143,7 @@ class Map extends Chart {
 
     // Update title of map
     d3.select('h6.map-title')
-        .text('COVID-19 cases by country from '
+        .text('Confirmed COVID-19 cases by country from '
             + state.startDate.toLocaleDateString()
             + ' to '
             + state.endDate.toLocaleDateString());
@@ -228,18 +241,5 @@ class Map extends Chart {
             state.addSelectedCountry(countryName);
           }
         });
-
-    let colorScale = vis.color;
-    let thresholds = vis.thresholds;
-    vis.colorLegendG.call(mapColorLegend, {
-      colorScale,
-      circleRadius: 12,
-      spacing: 30,
-      textOffset: 15,
-      backgroundRectWidth: 350,
-      titleText: 'Number of confirmed cases',
-      thresholds: thresholds
-    });
-
   }
 }
