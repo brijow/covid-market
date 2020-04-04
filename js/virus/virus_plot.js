@@ -14,6 +14,9 @@ class VirusPlot extends Chart
         vis.visualize_dead            = false;
         vis.visualize_recovered       = true;
 
+        vis.show_x_domain_border      = false;
+        vis.show_y_domain_border      = false;
+
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
         {
@@ -27,7 +30,7 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
-        dataset = vis.dataset;
+        let dataset = vis.dataset;
 
         vis.render(dataset);
     }
@@ -82,7 +85,7 @@ class VirusPlot extends Chart
 
         // the following code is used to draw our graph
         var target_svg    = d3.select("#virus_plot");
-        var target_width  = +target_svg.attr("width")  || 800;
+        var target_width  = +target_svg.attr("width")  || 1200;
         var target_height = +target_svg.attr("height") || 600;
 
         var margin = { top    : 20,
@@ -131,7 +134,12 @@ class VirusPlot extends Chart
             .call(AxisX)
             .attr("transform", `translate(0,${innerHeight})`)
             .attr("id",        "virus_axis_x");
-        chartAxisX.selectAll(".domain").remove();
+
+        if (!vis.show_x_domain_border)
+        {
+            chartAxisX.selectAll(".domain").remove();
+        }
+
         chartAxisX.selectAll(".virus_axis_label").data([null])
             .enter().append("text")
             .merge(chartAxisX.selectAll(".virus_axis_label").data([null]))
@@ -145,7 +153,12 @@ class VirusPlot extends Chart
             .merge(chart.selectAll("#virus_axis_y").data([null]))
             .call(AxisY)
             .attr("id", "virus_axis_y");
-        chartAxisY.selectAll(".domain").remove();
+
+        if (!vis.show_y_domain_border)
+        {
+            chartAxisY.selectAll(".domain").remove();
+        }
+
         chartAxisY.selectAll(".virus_axis_label").data([null])
             .enter().append("text")
             .merge(chartAxisY.selectAll(".virus_axis_label").data([null]))

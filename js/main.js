@@ -62,7 +62,7 @@ const state = {
 
   updateAll: function() {
     map.update();
-    //virus.update(); TODO: uncomment when virus.update() works: BUG: when calling virus.update(), it complains that vis.dataset is unavailable.
+    virus.update();
     //stocks.update(); TODO: uncomment when/if stocks.update() is implemented (may not be necessary to update as dates don't change and currently no country data)
   }
 };
@@ -136,3 +136,38 @@ const stocks = new StocksPlot({
 map.initVis();
 virus.initVis();
 stocks.initVis();
+
+/*
+ * The following code is for Alan's chart
+ */
+$(document).ready(function()
+{
+    $("#form_virus_display").change(function()
+    {
+        selected_value = $("input[name='name_virus_display']:checked").val();
+
+        if (selected_value === "confirmed")
+        {
+            virus.visualize_confirmed = true;
+            virus.visualize_dead      = false;
+            virus.visualize_recovered = false;
+            virus.update();
+        }
+
+        if (selected_value === "dead")
+        {
+            virus.visualize_confirmed = false;
+            virus.visualize_dead      = true;
+            virus.visualize_recovered = false;
+            virus.update();
+        }
+
+        if (selected_value === "recovered")
+        {
+            virus.visualize_confirmed = false;
+            virus.visualize_dead      = false;
+            virus.visualize_recovered = true;
+            virus.update();
+        }
+    });
+});
