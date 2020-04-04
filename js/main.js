@@ -125,7 +125,8 @@ const stocks = new StocksPlot({
   parentElement: '#stocks_plot',
   dataset : stocksData,
   containerWidth: 1200,
-  containerHeight: 200
+  containerHeight: 200,
+  margin: { top: 10, bottom: 30, right: 20, left: 50 }
 });
 
 /*

@@ -10,11 +10,12 @@ class StocksPlot extends Chart {
 
     // Append x-axis group, place at the bottom of the chart
     vis.xAxisG = vis.g.append('g')
-      .attr("class", "x-axis")
+      .attr("class", "x-axis text-secondary")
       .attr('transform', `translate(0,${vis.height})`);
 
     // Append y-axis group and append add a label to it (a text svg)
-    vis.yAxisG = vis.g.append('g');
+    vis.yAxisG = vis.g.append('g')
+      .attr("class", "y-axis text-secondary");
 
     // Define scales and axes
     // Note: we need to define their domains in initVis() after data is available
@@ -23,7 +24,8 @@ class StocksPlot extends Chart {
 
     vis.xAxis = d3.axisBottom(vis.xScale)
       .tickFormat(d3.timeFormat("%m/%d/%y"));
-    vis.yAxis = d3.axisLeft(vis.yScale);
+    vis.yAxis = d3.axisLeft(vis.yScale)
+      .tickFormat(d3.format(".0%"));
 
     // Add the brush
     const brushed = () => {
@@ -58,13 +60,14 @@ class StocksPlot extends Chart {
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
 
-        vis.xAxisG.append("text")
-          .attr("transform",
-                "translate(" + (vis.width/2) + " ," + 
-                               ( m.top ) + ")")
-          .style("text-anchor", "middle")
-          .style("fill", "black")
-          .text("date");
+        // Labels for x-axis probably more clutter than anything, comment out for now
+        //vis.xAxisG.append("text")
+        //  .attr("transform",
+        //        "translate(" + (vis.width/2) + " ," + 
+        //                       ( m.top ) + ")")
+        //  .style("text-anchor", "middle")
+        //  .style("fill", "black")
+        //  .text("date");
       }
 
       // Use all data as default
@@ -115,7 +118,7 @@ class StocksPlot extends Chart {
 
       // Add 5 horizontal grid lines for readibility
       vis.g.append("g")
-        .attr("class","grid")
+        .attr("class","stockgrid text-muted")
         .style("stroke-dasharray",("3,3"))
         .call( d3.axisLeft(vis.yScale)
           .ticks(5)

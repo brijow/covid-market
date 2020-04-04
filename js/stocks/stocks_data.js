@@ -34,7 +34,7 @@ class StocksData {
       const snpStartPrice = snpData[0]['Close'];
       snpData = snpData.map( (row) => {
           return { date: row.Date,
-                   price: ((row.Close - snpStartPrice)/snpStartPrice)*100 }
+                   price: ((row.Close - snpStartPrice)/snpStartPrice) }
       });
 
       let djiData = files[1].filter( (row) => {
@@ -43,7 +43,7 @@ class StocksData {
       const djiStartPrice = djiData[0]['Close'];
       djiData = djiData.map( (row) => {
           return { date: row.Date,
-                   price: ((row.Close - djiStartPrice)/djiStartPrice)*100 }
+                   price: ((row.Close - djiStartPrice)/djiStartPrice) }
       });
 
       let goldData = files[2].filter( (row) => {
@@ -52,7 +52,7 @@ class StocksData {
       const goldStartPrice = goldData[0]['Close'];
       goldData = goldData.map( (row) => {
           return { date: row.Date,
-                   price: ((row.Close - goldStartPrice)/goldStartPrice)*100 }
+                   price: ((row.Close - goldStartPrice)/goldStartPrice) }
       });
 
       let oilData = files[3].filter( (row) => {
@@ -61,7 +61,7 @@ class StocksData {
       const oilStartPrice = oilData[0]['Close'];
       oilData = oilData.map( (row) => {
           return { date: row.Date,
-                   price: ((row.Close - oilStartPrice)/oilStartPrice)*100 }
+                   price: ((row.Close - oilStartPrice)/oilStartPrice) }
       });
 
       dataset.snpData = snpData;

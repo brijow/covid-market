@@ -54,7 +54,8 @@ div.tooltip {
 /*For during development*/
 .my-container {
     border:  4px dotted green;
-    padding: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 .my-row {
@@ -77,6 +78,13 @@ div .map {
 div .virus {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.x-axis text {
+  font-size: 1.25rem;
+}
+.y-axis text {
+  font-size: 1rem;
 }
 
 /*For Alan's virus chart*/
