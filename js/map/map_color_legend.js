@@ -3,7 +3,6 @@
 
 const mapColorLegend = (selection, props) => {
   const {
-    colorScale,
     circleRadius,
     spacing,
     textOffset,
@@ -21,7 +20,7 @@ const mapColorLegend = (selection, props) => {
   		.attr('y', -circleRadius * 2)
   		.attr('rx', circleRadius * 2)
   		.attr('width', backgroundRectWidth)
-  		.attr('height', spacing * (colorScale.domain().length + 1) + circleRadius * 2)
+  		.attr('height', spacing * (thresholds.length + 1) + circleRadius * 2)
   		.attr('fill', 'white')
   		.attr('opacity', 0.8);
 
@@ -32,7 +31,7 @@ const mapColorLegend = (selection, props) => {
       .text(titleText);
 
   const groups = selection.selectAll('g')
-    .data(colorScale.domain());
+    .data(thresholds);
   const groupsEnter = groups
     .enter().append('g')
       .attr('class', 'tick');
@@ -46,7 +45,7 @@ const mapColorLegend = (selection, props) => {
   groupsEnter.append('circle')
     .merge(groups.select('circle'))
       .attr('r', circleRadius)
-      .attr('fill', colorScale);
+      .attr('class', (d, i) => 'color-legend-circle-' + i);
 
   const numberFormat = (d, i) =>
     (i === 0)
