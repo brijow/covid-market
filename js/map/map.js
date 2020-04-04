@@ -142,8 +142,8 @@ class Map extends Chart {
     }
 
     // Update title of map
-    d3.select('h6.map-title')
-        .text('Confirmed COVID-19 cases by country from '
+    d3.select('h5.map-title')
+        .text('Confirmed COVID-19 cases from '
             + state.startDate.toLocaleDateString()
             + ' to '
             + state.endDate.toLocaleDateString());
