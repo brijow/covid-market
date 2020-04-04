@@ -81,8 +81,14 @@ const virusData = new VirusData({
               'data/time_series_covid_19_recovered.csv',]
 });
 const stocksData = new StocksData({
-  fileNames: ['data/s_p_500.csv',
-              'data/dow_jones.csv',],
+  files: [ { file:  'data/s_p_500.csv',
+             label: 'S&P 500' },
+           { file:  'data/dow_jones.csv',
+             label: 'DOW JONES' },
+           { file:  'data/gold.csv',
+             label: 'GOLD' },
+           { file:  'data/crude_oil.csv',
+             label: 'CRUDE OIL' } ],
   minDate: DATE_START,
   maxDate: DATE_END
 });
