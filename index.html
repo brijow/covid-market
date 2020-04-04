@@ -47,36 +47,26 @@
         <!--Main content container-->
         <div class="container-fluid my-container h-100">
 
-            <!--Responsive layout idea: https://stackoverflow.com/questions/48471988/bootstrap-4-column-to-row-on-small-display-->
-            <!--Map in first column first row-->
-            <div class="row my-row text-center h-100">
-
-                <div class="col-12 col-sm-6 my-col">
-                    <div class="row h-100">
-                        <svg class="h-100 w-100" id="map"
-                             viewBox="-100 0 1200 500" perserveAspectRatio="xMinYMid">
-                        </svg>
-                    </div>
-                </div>
-
-                 <!--Virus data viz in second column first row-->
-                <div class="col-12 col-sm-6 my-col">
-                    <div class="row my-row h-100">
-                        <div class="col-4 col-sm-12 my-col">
-                            <svg class="h-100 w-100 text-dark" id="virus_plot"
-                                 viewBox="0 -60 800 700" perserveAspectRatio="xMinYMid">
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!--end of first row-->
-
             <div class="row my-row text-center h-100">
                 <svg class="h-100 w-100 text-dark" id="stocks_plot"
                      viewBox="0 0 1200 200" perserveAspectRatio="xMinYMid">
                 </svg>
-            </div><!--end of second row-->
+            </div>
+
+            <div class="row my-row text-center h-100">
+                <!--Map-->
+                <div class="col-12 col-md-6 map-div">
+                    <svg class="h-100 w-100" id="map"
+                         viewBox="-100 0 1200 500" perserveAspectRatio="xMinYMid">
+                    </svg>
+                </div>
+                 <!--Grouped bar chart-->
+                <div class="col-12 col-md-6 my-col">
+                    <svg class="h-100 w-100 text-dark" id="virus_plot"
+                         viewBox="0 -60 800 700" perserveAspectRatio="xMinYMid">
+                    </svg>
+                </div>
+            </div>
 
         </div> <!--end of container-->
 
