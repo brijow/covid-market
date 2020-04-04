@@ -85,7 +85,7 @@ class VirusPlot extends Chart
 
         // the following code is used to draw our graph
         var target_svg    = d3.select("#virus_plot");
-        var target_width  = +target_svg.attr("width")  || 800;
+        var target_width  = +target_svg.attr("width")  || 1200;
         var target_height = +target_svg.attr("height") || 600;
 
         var margin = { top    : 20,
