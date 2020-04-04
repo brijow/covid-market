@@ -1,8 +1,11 @@
 class StocksData {
 
   constructor(_config) {
-    this.snpFile = _config.fileNames[0];
+    //debugger;
+    this.snpInfo = _config.files[0];
     this.snpData = []; // cleaned data goes here
+    this.djiInfo = _config.files[1];
+    this.djiData = []; // cleaned data goes here
     this.minDate = _config.minDate;
     this.maxDate = _config.maxDate;
     this.dataAvailable = false;
@@ -14,15 +17,31 @@ class StocksData {
     // Use Promise.all because we plan to use multiple stock data files,
     // for now we just have the one S&P500 dataset.
     return Promise.all([
-      d3.csv(dataset.snpFile, d3.autoType),
+      d3.csv(dataset.snpInfo['file'], d3.autoType),
+      d3.csv(dataset.djiInfo['file'], d3.autoType),
     ]).then(files => {
 
       // Filter by dataset.minDate and dataset.maxDate
-      dataset.snpData = files[0].filter( (row) => {
-          //debugger;
+      let snpData = files[0].filter( (row) => {
           return (row.Date >= dataset.minDate && row.Date <= dataset.maxDate)
       });
+      const snpStartPrice = snpData[0]['Close'];
+      snpData = snpData.map( (row) => {
+          return { date: row.Date,
+                   price: ((row.Close - snpStartPrice)/snpStartPrice)*100 }
+      });
 
+      let djiData = files[1].filter( (row) => {
+          return (row.Date >= dataset.minDate && row.Date <= dataset.maxDate)
+      });
+      const djiStartPrice = djiData[0]['Close'];
+      djiData = djiData.map( (row) => {
+          return { date: row.Date,
+                   price: ((row.Close - djiStartPrice)/djiStartPrice)*100 }
+      });
+
+      dataset.snpData = snpData;
+      dataset.djiData = djiData;
       dataset.dataAvailable = true;
       return dataset;
     });

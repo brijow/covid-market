@@ -1,7 +1,7 @@
 class StocksPlot extends Chart {
 
   initVis() {
-    super.initVis(); // TODO: refactor super constructor and initVis and then remove this line
+    super.initVis();
     let vis = this;
     const m = vis.config.margin;
 
@@ -16,20 +16,6 @@ class StocksPlot extends Chart {
     // Append y-axis group and append add a label to it (a text svg)
     vis.yAxisG = vis.g.append('g');
 
-    const brushed = () => {
-      const selection = d3.event.selection;
-      if (!d3.event.sourceEvent || !selection) return;
-      const [x0, x1] = selection.map(vis.xScale.invert);
-      state.setStartDate(x0);
-      state.setEndDate(x1);
-    };
-
-    vis.brushG = vis.g.append('g')
-      .attr("class", "brush")
-      .call(d3.brushX()
-          .extent([[0,0], [vis.width, vis.height]])
-          .on("brush", brushed)); // TODO: change null to a function that sets global state object's date attributes
-
     // Define scales and axes
     // Note: we need to define their domains in initVis() after data is available
     vis.xScale = d3.scaleTime().range([0, vis.width]);
@@ -39,29 +25,53 @@ class StocksPlot extends Chart {
       .tickFormat(d3.timeFormat("%m/%d/%y"));
     vis.yAxis = d3.axisLeft(vis.yScale);
 
+    // Add the brush
+    const brushed = () => {
+      const selection = d3.event.selection;
+      if (!d3.event.sourceEvent || !selection) return;
+      const [x0, x1] = selection.map(vis.xScale.invert);
+      state.setStartDate(x0);
+      state.setEndDate(x1);
+    };
+    vis.brushG = vis.g.append('g')
+      .attr("class", "brush")
+      .call(d3.brushX()
+          .extent([[0,0], [vis.width, vis.height]])
+          .on("brush", brushed));
+
     // Promise chaining: dataset has its own initialize() method we wait for
     vis.config.dataset.initialize().then( dataset => {
 
-    const initStockPlot1Axis = () => {
-      // Now that the data is available, we can set the domains for our scales and draw axes
-      const dateExtent = d3.extent(vis.activeSnpData.map( d => {
-          return d["Date"] }));
-      vis.xScale.domain(dateExtent);
+      const initStockPlot1Axis = (mergedData) => {
+        // Now that the data is available, we can set the domains for our scales and draw axes
+        const dateExtent = d3.extent(mergedData.map( d => {
+            return d["date"]
+        }));
+        vis.xScale.domain(dateExtent);
 
-      // TODO: change this extent to be defined from multiple stock price data sources
-      const highPriceExtent = d3.extent(vis.activeSnpData.map( d => {
-          return d["High"] }));
-      vis.yScale.domain([highPriceExtent[0]*(0.9), highPriceExtent[1]]).nice();
+        // TODO: change this extent to be defined from multiple stock price data sources
+        const highPriceExtent = d3.extent(mergedData.map( d => {
+            return d["price"]
+        }));
+        vis.yScale.domain([highPriceExtent[0]*(0.9), highPriceExtent[1]]).nice();
 
-      vis.yAxisG.call(vis.yAxis);
-      vis.xAxisG.call(vis.xAxis)
-        .selectAll(".tick text");
-    }
+        vis.xAxisG.call(vis.xAxis);
+        vis.yAxisG.call(vis.yAxis);
+
+        vis.xAxisG.append("text")
+          .attr("transform",
+                "translate(" + (vis.width/2) + " ," + 
+                               ( m.top ) + ")")
+          .style("text-anchor", "middle")
+          .style("fill", "black")
+          .text("date");
+      }
 
       // Use all data as default
       vis.activeSnpData = dataset.snpData;
+      vis.activeDjiData = dataset.djiData;
 
-      initStockPlot1Axis();
+      initStockPlot1Axis(d3.merge([vis.activeDjiData, vis.activeSnpData]));
       vis.render();
     });
   }
@@ -69,32 +79,34 @@ class StocksPlot extends Chart {
   render() {
     let vis = this;
 
-    vis.xValue = d => d['Date'];
-    vis.yValue = d => d['High'];
+    const draw_line = (data, cls_str, colo_str) => {
+      // Draw the S&P500 line but use a transition!
+      let line = vis.g.selectAll(cls_str)
+        .data([data])
+        .join('path')
+          .attr('class', cls_str)
+          .attr("fill", "none")
+          .attr("stroke", colo_str)
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
+          .attr("stroke-width", 3)
+          .attr("d", d3.line()
+            .x( d => { return vis.xScale(d['date'])} )
+            .y( d => { return vis.yScale(d['price'])}));
 
-    // Draw the S&P500 line but use a transition!
-    let line = vis.g.selectAll(".snpline")
-      .data([vis.activeSnpData])
-      .join('path')
-        .attr('class', 'snpline')
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 3)
-        .attr("d", d3.line()
-          .x( d => { return vis.xScale(vis.xValue(d))} )
-          .y( d => { return vis.yScale(vis.yValue(d))}));
+      // Transition logic here:
+      // (draw line left to right to emphasize time-series/sequential nature of data)
+      const totalLength = line.node().getTotalLength();
+      line.attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+        .duration(4000)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+    }
 
-    // Transition logic here:
-    // (draw line left to right to emphasize time-series/sequential nature of data)
-    const totalLength = line.node().getTotalLength();
-    line.attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-      .duration(4000)
-      .ease(d3.easeLinear)
-      .attr("stroke-dashoffset", 0);
+    draw_line(vis.activeSnpData, ".snpline", "steelblue");
+    draw_line(vis.activeDjiData, ".djiline", "green");
 
       // Add 5 horizontal grid lines for readibility
       vis.g.append("g")
