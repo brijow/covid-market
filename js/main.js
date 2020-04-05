@@ -187,3 +187,43 @@ $(document).ready(function()
         }
     });
 });
+
+$(document).ready(function()
+{
+    $("#form_virus_country").change(function()
+    {
+        var virus_country_1_val = $("#virus_country_1").val();
+        var virus_country_2_val = $("#virus_country_2").val();
+        var virus_country_3_val = $("#virus_country_3").val();
+        var virus_country_4_val = $("#virus_country_4").val();
+
+        var virus_country_1_col = "red";
+        var virus_country_2_col = "blue";
+        var virus_country_3_col = "green";
+        var virus_country_4_col = "yellow";
+
+        var selected_countries_array = [virus_country_1_val,
+                                        virus_country_2_val,
+                                        virus_country_3_val,
+                                        virus_country_4_val];
+
+        var selected_countries_color = [virus_country_1_col,
+                                        virus_country_2_col,
+                                        virus_country_3_col,
+                                        virus_country_4_col];
+
+        for (var i=4; i>=0; i--)
+        {
+            if (selected_countries_array[i] === "N/A")
+            {
+                selected_countries_array.splice(i, 1);
+                selected_countries_color.splice(i, 1);
+            }
+        }
+
+        virus.selected_countries_array  = selected_countries_array;
+        virus.selected_countries_color  = selected_countries_color;
+        virus.selected_countries_length = selected_countries_array.length;
+        virus.update();
+    });
+});
