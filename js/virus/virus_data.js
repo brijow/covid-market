@@ -162,6 +162,9 @@ class VirusData
             virus_country_4.appendChild(option_4);
         });
 
+        $("#virus_country_1").val("Mainland China");
+        $("#virus_country_2").val("Italy");
+
         return countries_outp;
     }
 }
