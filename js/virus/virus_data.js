@@ -134,6 +134,34 @@ class VirusData
 
         this.availableCountries = Array.from(countries_temp);
 
+        var virus_country_1 = $("#virus_country_1")[0];
+        var virus_country_2 = $("#virus_country_2")[0];
+        var virus_country_3 = $("#virus_country_3")[0];
+        var virus_country_4 = $("#virus_country_4")[0];
+
+        virus.config.dataset.availableCountries.forEach(c =>
+        {
+            var option_1 = document.createElement("option");
+            option_1.value     = c;
+            option_1.innerHTML = c;
+            virus_country_1.appendChild(option_1);
+
+            var option_2 = document.createElement("option");
+            option_2.value     = c;
+            option_2.innerHTML = c;
+            virus_country_2.appendChild(option_2);
+
+            var option_3 = document.createElement("option");
+            option_3.value     = c;
+            option_3.innerHTML = c;
+            virus_country_3.appendChild(option_3);
+
+            var option_4 = document.createElement("option");
+            option_4.value     = c;
+            option_4.innerHTML = c;
+            virus_country_4.appendChild(option_4);
+        });
+
         return countries_outp;
     }
 }
