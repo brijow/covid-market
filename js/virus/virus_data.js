@@ -2,6 +2,8 @@ class VirusData
 {
     constructor(_config)
     {
+        this.availableCountries = [];
+
         this.covidDataConfirmed = _config.fileNames[0];
         this.covidDataDeaths    = _config.fileNames[1];
         this.covidDataRecovered = _config.fileNames[2];
@@ -129,6 +131,8 @@ class VirusData
                                  "min" :country_min,
                                  "max" :country_max});
         });
+
+        this.availableCountries = Array.from(countries_temp);
 
         return countries_outp;
     }
