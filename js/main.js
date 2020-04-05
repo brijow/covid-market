@@ -212,7 +212,7 @@ $(document).ready(function()
                                         virus_country_3_col,
                                         virus_country_4_col];
 
-        for (var i=0; i<4; i++)
+        for (var i=4; i>=0; i--)
         {
             if (selected_countries_array[i] === "N/A")
             {
