@@ -224,7 +224,7 @@ class Map extends Chart {
         .classed('selected-country', feat => {
           let country = vis.getDataByFeature(feat);
           if (!country) { country = { 'key': feat.properties.name }; }
-          return state.selectedCountries.includes(country.key);
+          return state.selectedCountry === country.key;
         })
         .attr('fill', feat => vis.color(vis.colorValue(vis.getDataByFeature(feat))))
 
@@ -258,17 +258,17 @@ class Map extends Chart {
         })
         .on('click', feat => {
           // First, get  the country NAME by the feature NAME
-          // If the country is in state.selectedCountries, remove it from the list
-          // Else if the country is not in state.selectedCountries, try to add it to the list.
+          // If the country is already selected, deselect it
+          // Else if the country is not selected, select it
           // Don't set the fill using the on-click listener.
           let country = vis.getDataByFeature(feat);
           if (!country) { country = { 'key': feat.properties.name }; }
           let countryName = country.key;
 
-          if (state.selectedCountries.includes(countryName)) {
-            state.removeSelectedCountry(countryName);
+          if (state.selectedCountry === countryName) {
+            state.setSelectedCountry(null);
           } else {
-            state.addSelectedCountry(countryName);
+            state.setSelectedCountry(countryName);
           }
         });
   }

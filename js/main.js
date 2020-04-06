@@ -8,18 +8,17 @@
  * method are:
  *   - state.startDate
  *   - state.endDate
- *   - state.selectedCountries
+ *   - state.selectedCountry
  * NEVER MODIFY THESE PROPERTIES WITHOUT CALLING THE SETTERS!  The setters will take care
  * of error checking and calling the update() method of all the charts.
  */
 const DATE_START = new Date('01/22/2020'); // min date common to all our datasets
 const DATE_END = new Date('03/11/20');     // max date common to all our datasets
-const MAX_COUNTRIES = 4;                   // select maximum of 4 countries at a time
 
 const state = {
   startDate: DATE_START,
   endDate: DATE_END,
-  selectedCountries: [],
+  selectedCountry: null,
 
   setStartDate: function(date) {
     if (date < this.endDate && date >= DATE_START) {
@@ -41,22 +40,8 @@ const state = {
     this.updateAll();
   },
 
-  addSelectedCountry: function(country) {
-    if (this.selectedCountries.length < MAX_COUNTRIES && !this.selectedCountries.includes(country)) {
-      this.selectedCountries.push(country);
-      this.updateAll();
-    }
-  },
-
-  removeSelectedCountry: function(country) {
-    if (this.selectedCountries.includes(country)) {
-      this.selectedCountries = this.selectedCountries.filter(c => c !== country);
-      this.updateAll();
-    }
-  },
-
-  clearAllCountries: function() {
-    this.selectedCounties = [];
+  setSelectedCountry: function(country) {
+    this.selectedCountry = country;
     this.updateAll();
   },
 
