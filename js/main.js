@@ -187,7 +187,7 @@ $(document).ready(function()
         {
             if (selected_countries_array[i] === "N/A")
             {
-                selected_countries_array = [virus_country_1_val];
+                selected_countries_array = ["worldwide"];
                 selected_countries_color = [virus_country_1_col];
             }
         }
