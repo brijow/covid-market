@@ -5,8 +5,8 @@ class VirusPlot extends Chart
         super.initVis();
         let vis = this;
 
-        vis.selected_countries_array  = ["Mainland China", "Italy"];
-        vis.selected_countries_color  = ["red",            "blue"];
+        vis.selected_countries_array  = ["Mainland China"];
+        vis.selected_countries_color  = ["red"];
         vis.selected_countries_length = 2;
         vis.number_of_days            = 10;
 
