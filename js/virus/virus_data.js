@@ -145,7 +145,7 @@ class VirusData
             {
                 for (var i=0; i<country.data.length; i++)
                 {
-                    countries_total_array.push(country.data[i]);
+                    countries_total_array.push(country.data[i].slice());
                 }
 
                 countries_total_max   = country.max;
