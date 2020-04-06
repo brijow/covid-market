@@ -132,6 +132,43 @@ class VirusData
                                  "max" :country_max});
         });
 
+        // step 3) here we are doing aggregating of the data
+        var countries_total_array = [];
+        var countries_total_initd = false;
+
+        var countries_total_min   = 0;
+        var countries_total_max   = 0;
+
+        countries_outp.forEach(country =>
+        {
+            if (!countries_total_initd)
+            {
+                for (var i=0; i<country.data.length; i++)
+                {
+                    countries_total_array.push(country.data[i]);
+                }
+
+                countries_total_max   = country.max;
+                countries_total_initd = true;
+            }
+
+            else
+            {
+                for (var i=0; i<country.data.length; i++)
+                {
+                    countries_total_array[i][1] += country.data[i][1];
+                }
+
+                countries_total_max   += country.max;
+                countries_total_initd  = true;
+            }
+        });
+
+        countries_outp.push({"name":"worldwide",
+                             "data":countries_total_array,
+                             "min" :countries_total_min,
+                             "max" :countries_total_max});
+
         this.availableCountries = Array.from(countries_temp);
 
         var virus_country_1 = $("#virus_country_1")[0];
