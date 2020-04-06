@@ -64,7 +64,7 @@ class VirusPlot extends Chart
             {
                 if (data.name === selection)
                 {
-                    countries.push(data);
+                    countries.push({...data});
                 }
             });
         });
