@@ -7,7 +7,7 @@ class VirusPlot extends Chart
 
         vis.selected_countries_array  = ["Mainland China"];
         vis.selected_countries_color  = ["red"];
-        vis.selected_countries_length = 2;
+        vis.selected_countries_length = 1;
         vis.number_of_days            = 10;
 
         vis.visualize_confirmed       = false;
