@@ -10,9 +10,9 @@ class VirusPlot extends Chart
         vis.selected_countries_length = 2;
         vis.number_of_days            = 10;
 
-        vis.visualize_confirmed       = true;
+        vis.visualize_confirmed       = false;
         vis.visualize_dead            = false;
-        vis.visualize_recovered       = false;
+        vis.visualize_recovered       = true;
 
         vis.show_x_domain_border      = false;
         vis.show_y_domain_border      = false;
