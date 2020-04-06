@@ -91,14 +91,17 @@ div .virus {
 #virus_axis_x
 {
     fill: #000;
+    font-size: 1rem;
 }
 
 #virus_axis_y
 {
     fill: #000;
+    font-size: 1rem;
 }
 
 .virus_axis_label
 {
     fill: #000;
+    font-size: 1rem;
 }
