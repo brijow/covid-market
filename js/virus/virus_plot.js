@@ -248,7 +248,7 @@ class VirusPlot extends Chart
             // here we have logic handling selected unfound name
             else
             {
-                unfound_name = "worldwide";
+                unfound_name = state.selectedCountry;
 
                 vis.selected_countries_array = [unfound_name];
 
