@@ -3,6 +3,7 @@ class VirusData
     constructor(_config)
     {
         this.availableCountries = [];
+        this.availableDates     = [];
 
         this.covidDataConfirmed = _config.fileNames[0];
         this.covidDataDeaths    = _config.fileNames[1];
@@ -146,6 +147,8 @@ class VirusData
                 for (var i=0; i<country.data.length; i++)
                 {
                     countries_total_array.push(country.data[i].slice());
+
+                    this.availableDates.push(country.data[i][0]);
                 }
 
                 countries_total_max   = country.max;
