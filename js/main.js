@@ -193,23 +193,8 @@ $(document).ready(function()
     $("#form_virus_country").change(function()
     {
         var virus_country_1_val = $("#virus_country_1").val();
-        var virus_country_1_col = "red";
 
-        var selected_countries_array = [virus_country_1_val];
-        var selected_countries_color = [virus_country_1_col];
-
-        for (var i=4; i>=0; i--)
-        {
-            if (selected_countries_array[i] === "N/A")
-            {
-                selected_countries_array = ["worldwide"];
-                selected_countries_color = [virus_country_1_col];
-            }
-        }
-
-        virus.selected_countries_array  = selected_countries_array;
-        virus.selected_countries_color  = selected_countries_color;
-        virus.selected_countries_length = selected_countries_array.length;
-        virus.update();
+        state.setSelectedCountry(virus_country_1_val);
+        state.updateAll();
     });
 });
