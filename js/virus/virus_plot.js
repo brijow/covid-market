@@ -206,8 +206,8 @@ class VirusPlot extends Chart
                 .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/cn_division*i)
                 .attr("width",  (d) => AxisScaleX.bandwidth()/cn_division)
                 .transition().duration(150)
-                .attr("y",      (d) => AxisScaleY(yValue(d)))
-                .attr("height", (d) => innerHeight - AxisScaleY(yValue(d)));
+                .attr("y",      (d) => abs_max === 0 ? innerHeight : AxisScaleY(yValue(d)))
+                .attr("height", (d) => abs_max === 0 ? 0           : innerHeight - AxisScaleY(yValue(d)));
 
             cn_selection.exit().remove();
         }
