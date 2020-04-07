@@ -139,7 +139,7 @@ class VirusPlot extends Chart
             .padding(0.25);
 
         const AxisScaleY = d3.scaleLinear()
-            .domain([0, abs_max])
+            .domain([0, Math.max(abs_max, 1)])
             .range([innerHeight, 0])
             .nice();
 
