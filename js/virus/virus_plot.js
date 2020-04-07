@@ -299,7 +299,7 @@ class VirusPlot extends Chart
                 var option_1 = document.createElement("option");
                 option_1.value     = vis.selected_countries_array[0];
                 option_1.innerHTML = vis.selected_countries_array[0];
-                virus_country_1.appendChild(option_1);
+                virus_country_1[0].appendChild(option_1);
 
                 virus_country_1.val(vis.selected_countries_array[0]);
             }
@@ -313,7 +313,7 @@ class VirusPlot extends Chart
                 var option_1 = document.createElement("option");
                 option_1.value     = "N/A";
                 option_1.innerHTML = "N/A";
-                virus_country_1.appendChild(option_1);
+                virus_country_1[0].appendChild(option_1);
 
                 virus_country_1.val("N/A");
             }
