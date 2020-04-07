@@ -245,6 +245,11 @@ class VirusPlot extends Chart
                 regular_name = "Russian Federation";
             }
 
+            if (regular_name === "Iran")
+            {
+                regular_name = "Iran (Islamic Republic of)";
+            }
+
             var name_in_reg_array  = regular_name_array.includes(regular_name);
             var name_in_rev_object = reversed_name_object.hasOwnProperty(regular_name);
 
