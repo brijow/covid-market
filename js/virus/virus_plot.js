@@ -20,7 +20,7 @@ class VirusPlot extends Chart
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
         {
-            vis.dataset = dataset;
+            vis.virgin_dataset = dataset;
 
             vis.render(dataset);
         });
@@ -30,7 +30,7 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
-        let dataset = vis.dataset;
+        let dataset = vis.virgin_dataset;
 
         vis.render(dataset);
     }
