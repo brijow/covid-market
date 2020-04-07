@@ -5,9 +5,9 @@ class VirusPlot extends Chart
         super.initVis();
         let vis = this;
 
-        vis.selected_countries_array  = ["Mainland China", "Italy"];
-        vis.selected_countries_color  = ["red",            "blue"];
-        vis.selected_countries_length = 2;
+        vis.selected_countries_array  = ["Mainland China"];
+        vis.selected_countries_color  = ["red"];
+        vis.selected_countries_length = 1;
         vis.number_of_days            = 10;
 
         vis.visualize_confirmed       = false;
@@ -20,7 +20,7 @@ class VirusPlot extends Chart
         // Promise chaining: dataset has its own initialize() method we wait for
         vis.config.dataset.initialize().then(dataset =>
         {
-            vis.dataset = dataset;
+            vis.virgin_dataset = dataset;
 
             vis.render(dataset);
         });
@@ -30,7 +30,7 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
-        let dataset = vis.dataset;
+        let dataset = {...vis.virgin_dataset};
 
         vis.render(dataset);
     }
@@ -38,6 +38,9 @@ class VirusPlot extends Chart
     render(dataset)
     {
         let vis = this;
+
+        vis.handle_chart_state();
+        vis.handle_dropdown_state();
 
         // the following code is used to extract dataset
         if (vis.visualize_confirmed)
@@ -64,7 +67,7 @@ class VirusPlot extends Chart
             {
                 if (data.name === selection)
                 {
-                    countries.push(data);
+                    countries.push({...data});
                 }
             });
         });
@@ -77,11 +80,32 @@ class VirusPlot extends Chart
         {
             country.data = country.data.slice(Math.max(country.data.length - vis.number_of_days, 0));
 
+            country.data.forEach(d =>
+            {
+                d = d.slice();
+            });
+
             if (abs_max < country.max)
             {
                 abs_max = country.max;
             }
         });
+
+        if (countries.length === 0)
+        {
+            var graft_country = {...dataset[0]};
+
+            graft_country.name = vis.selected_countries_array[0];
+            graft_country.data = graft_country.data.slice(Math.max(graft_country.data.length - vis.number_of_days, 0));
+
+            graft_country.data.forEach(d =>
+            {
+                d    = d.slice();
+                d[1] = 0;
+            });
+
+            countries.push(graft_country);
+        }
 
         // the following code is used to draw our graph
         var target_svg    = d3.select("#virus_plot");
@@ -116,7 +140,7 @@ class VirusPlot extends Chart
             .padding(0.25);
 
         const AxisScaleY = d3.scaleLinear()
-            .domain([0, abs_max])
+            .domain([0, Math.max(abs_max, 1)])
             .range([innerHeight, 0])
             .nice();
 
@@ -183,10 +207,116 @@ class VirusPlot extends Chart
                 .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/cn_division*i)
                 .attr("width",  (d) => AxisScaleX.bandwidth()/cn_division)
                 .transition().duration(150)
-                .attr("y",      (d) => AxisScaleY(yValue(d)))
-                .attr("height", (d) => innerHeight - AxisScaleY(yValue(d)));
+                .attr("y",      (d) => abs_max === 0 ? innerHeight : AxisScaleY(yValue(d)))
+                .attr("height", (d) => abs_max === 0 ? 0           : innerHeight - AxisScaleY(yValue(d)));
 
             cn_selection.exit().remove();
+        }
+    }
+
+    handle_chart_state()
+    {
+        let vis = this;
+
+        var regular_name_array   = vis.virgin_dataset.availableCountries;
+        var reversed_name_object = swap(MapDict);
+
+        // the following logic is for when 0 selected countries
+        if (state.selectedCountry === null)
+        {
+            vis.selected_countries_array = ["worldwide"];
+
+            return;
+        }
+
+        // the following logic is for when 1 selected countries
+        else
+        {
+            var regular_name  = state.selectedCountry;
+            var reversed_name = null;
+            var unfound_name  = null;
+
+            if (regular_name === "China")
+            {
+                regular_name = "Mainland China";
+            }
+
+            if (regular_name === "Russia")
+            {
+                regular_name = "Russian Federation";
+            }
+
+            if (regular_name === "Iran")
+            {
+                regular_name = "Iran (Islamic Republic of)";
+            }
+
+            var name_in_reg_array  = regular_name_array.includes(regular_name);
+            var name_in_rev_object = reversed_name_object.hasOwnProperty(regular_name);
+
+            // here we have logic handling selected regular name
+            if (name_in_reg_array)
+            {
+                vis.selected_countries_array = [regular_name];
+
+                return;
+            }
+
+            // here we have logic handling selected reversed name
+            if (name_in_rev_object)
+            {
+                reversed_name = reversed_name_object[regular_name];
+
+                vis.selected_countries_array = [reversed_name];
+
+                return;
+            }
+
+            // here we have logic handling selected unfound name
+            else
+            {
+                unfound_name = state.selectedCountry;
+
+                vis.selected_countries_array = [unfound_name];
+
+                return;
+            }
+        }
+    }
+
+    handle_dropdown_state()
+    {
+        let vis = this;
+
+        var virus_country_1 = $("#virus_country_1");
+
+        if (vis.selected_countries_array[0] !== "worldwide")
+        {
+            virus_country_1.val(vis.selected_countries_array[0]);
+
+            if (virus_country_1.val() === null)
+            {
+                var option_1 = document.createElement("option");
+                option_1.value     = vis.selected_countries_array[0];
+                option_1.innerHTML = vis.selected_countries_array[0];
+                virus_country_1[0].appendChild(option_1);
+
+                virus_country_1.val(vis.selected_countries_array[0]);
+            }
+        }
+        else
+        {
+            virus_country_1.val("N/A");
+
+            if (virus_country_1.val() === null)
+            {
+                var option_1 = document.createElement("option");
+                option_1.value     = "N/A";
+                option_1.innerHTML = "N/A";
+                virus_country_1[0].appendChild(option_1);
+
+                virus_country_1.val("N/A");
+            }
         }
     }
 }

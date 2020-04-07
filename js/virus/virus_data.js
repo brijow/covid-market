@@ -132,12 +132,46 @@ class VirusData
                                  "max" :country_max});
         });
 
+        // step 3) here we are doing aggregating of the data
+        var countries_total_array = [];
+        var countries_total_initd = false;
+
+        var countries_total_min   = 0;
+        var countries_total_max   = 0;
+
+        countries_outp.forEach(country =>
+        {
+            if (!countries_total_initd)
+            {
+                for (var i=0; i<country.data.length; i++)
+                {
+                    countries_total_array.push(country.data[i].slice());
+                }
+
+                countries_total_max   = country.max;
+                countries_total_initd = true;
+            }
+
+            else
+            {
+                for (var i=0; i<country.data.length; i++)
+                {
+                    countries_total_array[i][1] += country.data[i][1];
+                }
+
+                countries_total_max   += country.max;
+                countries_total_initd  = true;
+            }
+        });
+
+        countries_outp.push({"name":"worldwide",
+                             "data":countries_total_array,
+                             "min" :countries_total_min,
+                             "max" :countries_total_max});
+
         this.availableCountries = Array.from(countries_temp);
 
         var virus_country_1 = $("#virus_country_1")[0];
-        var virus_country_2 = $("#virus_country_2")[0];
-        var virus_country_3 = $("#virus_country_3")[0];
-        var virus_country_4 = $("#virus_country_4")[0];
 
         virus.config.dataset.availableCountries.forEach(c =>
         {
@@ -145,25 +179,9 @@ class VirusData
             option_1.value     = c;
             option_1.innerHTML = c;
             virus_country_1.appendChild(option_1);
-
-            var option_2 = document.createElement("option");
-            option_2.value     = c;
-            option_2.innerHTML = c;
-            virus_country_2.appendChild(option_2);
-
-            var option_3 = document.createElement("option");
-            option_3.value     = c;
-            option_3.innerHTML = c;
-            virus_country_3.appendChild(option_3);
-
-            var option_4 = document.createElement("option");
-            option_4.value     = c;
-            option_4.innerHTML = c;
-            virus_country_4.appendChild(option_4);
         });
 
         $("#virus_country_1").val("Mainland China");
-        $("#virus_country_2").val("Italy");
 
         return countries_outp;
     }
