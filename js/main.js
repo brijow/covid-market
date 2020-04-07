@@ -194,7 +194,15 @@ $(document).ready(function()
     {
         var virus_country_1_val = $("#virus_country_1").val();
 
-        state.setSelectedCountry(virus_country_1_val);
+        if (MapDict.hasOwnProperty(virus_country_1_val))
+        {
+            state.setSelectedCountry(MapDict[virus_country_1_val]);
+        }
+        else
+        {
+            state.setSelectedCountry(virus_country_1_val);
+        }
+
         state.updateAll();
     });
 });
