@@ -1,4 +1,5 @@
-const MapDict = {
+const MapDict =
+{
     /***
     We have 26 countries in our data file that have discrepancies with our topojson:
 
