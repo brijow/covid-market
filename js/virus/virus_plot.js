@@ -102,6 +102,8 @@ class VirusPlot extends Chart
                 d    = d.slice();
                 d[1] = 0;
             });
+
+            countries.push(graft_country);
         }
 
         // the following code is used to draw our graph
