@@ -1,4 +1,19 @@
 /*
+ * Helper function for reversing key value arrays
+ */
+function swap(json)
+{
+    var result = {};
+
+    for(var key in json)
+    {
+        result[json[key]] = key;
+    }
+
+    return result;
+}
+
+/*
  * State management
  * ----------------
  * We will use this state variable in order to keep track of things for bidirectional
