@@ -35,6 +35,24 @@ const state = {
   endDate: DATE_END,
   selectedCountry: null,
 
+  getStartDateAsStr: function()
+  {
+    var month = this.startDate.getMonth().toString();
+    var date  = this.startDate.getDay().toString();
+    var year  = "2020";
+
+    return month + "/" + date + "/" + year;
+  }
+
+  getEndDateAsStr: function()
+  {
+    var month = this.endDate.getMonth().toString();
+    var date  = this.endDate.getDay().toString();
+    var year  = "2020";
+
+    return month + "/" + date + "/" + year;
+  }
+
   setStartDate: function(date) {
     if (date < this.endDate && date >= DATE_START) {
       this.startDate = date;
