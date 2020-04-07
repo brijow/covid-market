@@ -214,6 +214,16 @@ class VirusPlot extends Chart
             var reversed_name = null;
             var unfound_name  = null;
 
+            if (regular_name === "China")
+            {
+                regular_name = "Mainland China";
+            }
+
+            if (regular_name === "Russia")
+            {
+                regular_name = "Russian Federation";
+            }
+
             var name_in_reg_array  = regular_name_array.includes(regular_name);
             var name_in_rev_object = reversed_name_object.hasOwnProperty(regular_name);
 
