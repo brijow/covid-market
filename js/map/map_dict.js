@@ -61,5 +61,32 @@ const MapDict =
  	'Holy See'                       : 'Vatican',
  	'Martinique'                     : 'France',
  	'Reunion'                        : 'France',
- 	'North Ireland'                  : 'United Kingdom'
+ 	'North Ireland'                  : 'United Kingdom',
 };
+
+const RevMapDict =
+{
+    'China'                    : 'Mainland China',
+    'Macao'                    : 'Macau',
+    'United States of America' : 'US',
+    "Côte d'Ivoire"            : 'Ivory Coast',
+    'United Kingdom'           : 'UK',
+    'Macedonia'                : 'North Macedonia',
+    'Czechia'                  : 'Czech Republic',
+    'Dominican Rep.'           : 'Dominican Republic',
+    'St-Barthélemy'            : 'Saint Barthelemy',
+    'Faeroe Is.'               : 'Faroe Islands',
+    'Bosnia and Herz.'         : 'Bosnia and Herzegovina',
+    'Vatican'                  : 'Vatican City',
+    'Ireland'                  : 'Republic of Ireland',
+    'St-Martin'                : 'St. Martin',
+    'Palestine'                : 'occupied Palestinian territory',
+    'St-Martin'                : "('St. Martin',)",
+    'Dem. Rep. Congo'          : 'Congo (Kinshasa)',
+    'United Kingdom'           : 'Gibraltar',
+    'France'                   : 'French Guiana',
+    'Vatican'                  : 'Holy See',
+    'France'                   : 'Martinique',
+    'France'                   : 'Reunion',
+    'United Kingdom'           : 'North Ireland',
+}
