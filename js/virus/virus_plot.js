@@ -40,6 +40,7 @@ class VirusPlot extends Chart
         let vis = this;
 
         vis.handle_chart_state();
+        vis.handle_dropdown_state();
 
         // the following code is used to extract dataset
         if (vis.visualize_confirmed)
@@ -279,6 +280,42 @@ class VirusPlot extends Chart
                 vis.selected_countries_array = [unfound_name];
 
                 return;
+            }
+        }
+    }
+
+    handle_dropdown_state()
+    {
+        let vis = this;
+
+        var virus_country_1 = $("#virus_country_1")[0];
+
+        if (vis.selected_countries_array[0] !== "worldwide")
+        {
+            virus_country_1.val(vis.selected_countries_array[0]);
+
+            if (virus_country_1.val() === null)
+            {
+                var option_1 = document.createElement("option");
+                option_1.value     = vis.selected_countries_array[0];
+                option_1.innerHTML = vis.selected_countries_array[0];
+                virus_country_1.appendChild(option_1);
+
+                virus_country_1.val(vis.selected_countries_array[0]);
+            }
+        }
+        else
+        {
+            virus_country_1.val("N/A");
+
+            if (virus_country_1.val() === null)
+            {
+                var option_1 = document.createElement("option");
+                option_1.value     = "N/A";
+                option_1.innerHTML = "N/A";
+                virus_country_1.appendChild(option_1);
+
+                virus_country_1.val("N/A");
             }
         }
     }
