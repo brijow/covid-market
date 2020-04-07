@@ -79,11 +79,30 @@ class VirusPlot extends Chart
         {
             country.data = country.data.slice(Math.max(country.data.length - vis.number_of_days, 0));
 
+            country.data.forEach(d =>
+            {
+                d = d.slice();
+            });
+
             if (abs_max < country.max)
             {
                 abs_max = country.max;
             }
         });
+
+        if (countries.length === 0)
+        {
+            var graft_country = {...dataset[0]};
+
+            graft_country.name = vis.selected_countries_array[0];
+            graft_country.data = graft_country.data.slice(Math.max(graft_country.data.length - vis.number_of_days, 0));
+
+            graft_country.data.forEach(d =>
+            {
+                d    = d.slice();
+                d[1] = 0;
+            });
+        }
 
         // the following code is used to draw our graph
         var target_svg    = d3.select("#virus_plot");
