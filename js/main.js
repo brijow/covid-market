@@ -42,7 +42,7 @@ const state = {
     var year  = "2020";
 
     return month + "/" + date + "/" + year;
-  }
+  },
 
   getEndDateAsStr: function()
   {
@@ -51,7 +51,7 @@ const state = {
     var year  = "2020";
 
     return month + "/" + date + "/" + year;
-  }
+  },
 
   setStartDate: function(date) {
     if (date < this.endDate && date >= DATE_START) {
