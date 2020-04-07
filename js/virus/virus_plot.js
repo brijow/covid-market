@@ -288,7 +288,7 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
-        var virus_country_1 = $("#virus_country_1")[0];
+        var virus_country_1 = $("#virus_country_1");
 
         if (vis.selected_countries_array[0] !== "worldwide")
         {
