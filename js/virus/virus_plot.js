@@ -39,6 +39,8 @@ class VirusPlot extends Chart
     {
         let vis = this;
 
+        vis.handle_chart_state();
+
         // the following code is used to extract dataset
         if (vis.visualize_confirmed)
         {
@@ -187,6 +189,61 @@ class VirusPlot extends Chart
                 .attr("height", (d) => innerHeight - AxisScaleY(yValue(d)));
 
             cn_selection.exit().remove();
+        }
+    }
+
+    handle_chart_state()
+    {
+        let vis = this;
+
+        var regular_name_array   = vis.virgin_dataset.availableCountries;
+        var reversed_name_object = swap(MapDict);
+
+        // the following logic is for when 0 selected countries
+        if (state.selectedCountry === null)
+        {
+            vis.selected_countries_array = ["worldwide"];
+
+            return;
+        }
+
+        // the following logic is for when 1 selected countries
+        else
+        {
+            var regular_name  = state.selectedCountry;
+            var reversed_name = null;
+            var unfound_name  = null;
+
+            var name_in_reg_array  = regular_name_array.includes(regular_name);
+            var name_in_rev_object = reversed_name_object.hasOwnProperty(regular_name);
+
+            // here we have logic handling selected regular name
+            if (name_in_reg_array)
+            {
+                vis.selected_countries_array = [regular_name];
+
+                return;
+            }
+
+            // here we have logic handling selected reversed name
+            if (name_in_rev_object)
+            {
+                reversed_name = reversed_name_object[regular_name];
+
+                vis.selected_countries_array = [reversed_name];
+
+                return;
+            }
+
+            // here we have logic handling selected unfound name
+            else
+            {
+                unfound_name = "worldwide";
+
+                vis.selected_countries_array = [unfound_name];
+
+                return;
+            }
         }
     }
 }
