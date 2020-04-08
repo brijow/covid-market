@@ -37,20 +37,20 @@ const state = {
 
   getStartDateAsStr: function()
   {
-    var month = this.startDate.getMonth().toString();
-    var date  = this.startDate.getDay().toString();
-    var year  = "2020";
+    var month = (1 + this.startDate.getMonth()).toString().padStart(2, '0');
+    var day  = this.startDate.getDate().toString().padStart(2, '0');
+    var year  = this.startDate.getFullYear().toString().slice(2)
 
-    return month + "/" + date + "/" + year;
+    return month + "/" + day + "/" + year;
   },
 
   getEndDateAsStr: function()
   {
-    var month = this.endDate.getMonth().toString();
-    var date  = this.endDate.getDay().toString();
-    var year  = "2020";
+    var month = (1 + this.endDate.getMonth()).toString().padStart(2, '0');
+    var day  = this.endDate.getDate().toString().padStart(2, '0');
+    var year  = this.endDate.getFullYear().toString().slice(2)
 
-    return month + "/" + date + "/" + year;
+    return month + "/" + day + "/" + year;
   },
 
   setStartDate: function(date) {
