@@ -6,7 +6,7 @@ class VirusPlot extends Chart
         let vis = this;
 
         vis.selected_countries_array  = ["Mainland China"];
-        vis.selected_countries_color  = ["red"];
+        vis.selected_countries_color  = "#4cb082";
         vis.selected_countries_length = 1;
         vis.number_of_days            = 10;
 
@@ -45,17 +45,20 @@ class VirusPlot extends Chart
         // the following code is used to extract dataset
         if (vis.visualize_confirmed)
         {
-            dataset = dataset.cleanedCovidDataConfirmed;
+            dataset                      = dataset.cleanedCovidDataConfirmed;
+            vis.selected_countries_color = "#fec44f";
         }
 
         if (vis.visualize_dead)
         {
-            dataset = dataset.cleanedCovidDataDeaths;
+            dataset                      = dataset.cleanedCovidDataDeaths;
+            vis.selected_countries_color = "#e72525";
         }
 
         if (vis.visualize_recovered)
         {
-            dataset = dataset.cleanedCovidDataRecovered;
+            dataset                      = dataset.cleanedCovidDataRecovered;
+            vis.selected_countries_color = "#4cb082";
         }
 
         // the following code is used to extract countries
@@ -241,7 +244,7 @@ class VirusPlot extends Chart
 
             cn_selection.enter().append("rect")
                 .merge(cn_selection)
-                .attr("fill",   vis.selected_countries_color[i])
+                .attr("fill",   vis.selected_countries_color)
                 .attr("class",  "virus_rect_c" + i)
                 .transition().duration(150)
                 .attr("x",      (d) => AxisScaleX(xValue(d)) + AxisScaleX.bandwidth()/cn_division*i)
