@@ -37,8 +37,8 @@ const state = {
 
   getStartDateAsStr: function()
   {
-    var month = (1 + this.startDate.getMonth()).toString().padStart(2, '0');
-    var day  = this.startDate.getDate().toString().padStart(2, '0');
+    var month = (1 + this.startDate.getMonth()).toString();
+    var day  = this.startDate.getDate().toString();
     var year  = this.startDate.getFullYear().toString().slice(2)
 
     return month + "/" + day + "/" + year;
