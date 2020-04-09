@@ -76,9 +76,21 @@ class VirusPlot extends Chart
         var abs_min = 0;
         var abs_max = 0;
 
+        var index_start = vis.virgin_dataset.availableDates.indexOf(state.getStartDateAsStr()) + 0;
+        var index_end   = vis.virgin_dataset.availableDates.indexOf(state.getEndDateAsStr())   + 1;
+
+        if ((index_end - index_start) > vis.number_of_days)
+        {
+            index_start = index_end - vis.number_of_days;
+        }
+        else
+        {
+            index_start = index_start;
+        }
+
         countries.forEach(country =>
         {
-            country.data = country.data.slice(Math.max(country.data.length - vis.number_of_days, 0));
+            country.data = country.data.slice(index_start, index_end);
 
             country.data.forEach(d =>
             {
