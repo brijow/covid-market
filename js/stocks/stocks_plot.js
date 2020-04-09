@@ -68,15 +68,6 @@ class StocksPlot extends Chart {
 
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
-
-        // Labels for x-axis probably more clutter than anything, comment out for now
-        //vis.xAxisG.append("text")
-        //  .attr("transform",
-        //        "translate(" + (vis.width/2) + " ," + 
-        //                       ( m.top ) + ")")
-        //  .style("text-anchor", "middle")
-        //  .style("fill", "black")
-        //  .text("date");
       }
 
       // Use all data as default
@@ -94,8 +85,8 @@ class StocksPlot extends Chart {
   render() {
     let vis = this;
 
-    const draw_line = (data, cls_str, colo_str) => {
-      // Draw the S&P500 line but use a transition!
+    const draw_line = (data, cls_str, colo_str, text_label, text_label_pos) => {
+      // Draw the lines, but use a transition! (see below)
       let line = vis.g.selectAll(cls_str)
         .data([data])
         .join('path')
@@ -118,21 +109,30 @@ class StocksPlot extends Chart {
         .duration(4000)
         .ease(d3.easeLinear)
         .attr("stroke-dashoffset", 0);
+
+      // Add a text label for each line, placed on left hand side of the chart
+      vis.g.append('text')
+        .attr("x", 28)
+        .attr("y", text_label_pos)
+        .style("font-size", "14px")
+        .style("font-weight", 500)
+        .style("fill", colo_str)
+        .text(text_label);
     }
 
-    draw_line(vis.activeSnpData, ".snpline", "steelblue");
-    draw_line(vis.activeDjiData, ".djiline", "red");
-    draw_line(vis.activeGoldData, ".goldline", "orange");
-    draw_line(vis.activeOilData, ".oilline", "green");
+    draw_line(vis.activeGoldData, ".goldline", "orange", "GOLD", 66);
+    draw_line(vis.activeSnpData, ".snpline", "steelblue", "S&P 500", 86);
+    draw_line(vis.activeDjiData, ".djiline", "red", "DOW JONES", 106);
+    draw_line(vis.activeOilData, ".oilline", "green", "CRUDE OIL", 126);
 
-      // Add 5 horizontal grid lines for readibility
-      vis.g.append("g")
-        .attr("class","stockgrid text-muted")
-        .style("stroke-dasharray",("3,3"))
-        .call( d3.axisLeft(vis.yScale)
-          .ticks(5)
-          .tickSize(-vis.width)
-          .tickFormat("")
-        );
+    // Add 5 horizontal grid lines for readibility
+    vis.g.append("g")
+      .attr("class","stockgrid text-muted")
+      .style("stroke-dasharray",("3,3"))
+      .call( d3.axisLeft(vis.yScale)
+        .ticks(5)
+        .tickSize(-vis.width)
+        .tickFormat("")
+      );
   }
 }
