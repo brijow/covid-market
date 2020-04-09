@@ -76,30 +76,58 @@ class VirusPlot extends Chart
         var abs_min = 0;
         var abs_max = 0;
 
-        var index_start = vis.virgin_dataset.availableDates.indexOf(state.getStartDateAsStr()) + 0;
-        var index_end   = vis.virgin_dataset.availableDates.indexOf(state.getEndDateAsStr())   + 1;
+        var index_start  = vis.virgin_dataset.availableDates.indexOf(state.getStartDateAsStr()) + 0;
+        var index_end    = vis.virgin_dataset.availableDates.indexOf(state.getEndDateAsStr())   + 1;
+        var index_scaled = false;
 
         if ((index_end - index_start) > vis.number_of_days)
         {
-            index_start = index_end - vis.number_of_days;
+            index_start  = index_end - vis.number_of_days;
+            index_scaled = true;
         }
         else
         {
-            index_start = index_start;
+            index_start  = index_start;
+            index_scaled = false;
         }
 
         countries.forEach(country =>
         {
-            country.data = country.data.slice(index_start, index_end);
-
-            country.data.forEach(d =>
+            if (index_scaled)
             {
-                d = d.slice();
-            });
+                scale_number = country.data[index_start-1];
 
-            if (abs_max < country.max)
+                country.data = country.data.slice(index_start, index_end);
+
+                country.data.forEach(d =>
+                {
+                    d = d.slice();
+
+                    d[0] = d[0];
+                    d[1] = d[1] - scale_number;
+                });
+
+                if (abs_max < country.max)
+                {
+                    abs_max = country.max;
+                }
+            }
+            else
             {
-                abs_max = country.max;
+                country.data = country.data.slice(index_start, index_end);
+
+                country.data.forEach(d =>
+                {
+                    d = d.slice();
+
+                    d[0] = d[0];
+                    d[1] = d[1];
+                });
+
+                if (abs_max < country.max)
+                {
+                    abs_max = country.max;
+                }
             }
         });
 
