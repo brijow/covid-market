@@ -46,8 +46,8 @@ const state = {
 
   getEndDateAsStr: function()
   {
-    var month = (1 + this.endDate.getMonth()).toString().padStart(2, '0');
-    var day  = this.endDate.getDate().toString().padStart(2, '0');
+    var month = (1 + this.endDate.getMonth()).toString();
+    var day  = this.endDate.getDate().toString();
     var year  = this.endDate.getFullYear().toString().slice(2)
 
     return month + "/" + day + "/" + year;
