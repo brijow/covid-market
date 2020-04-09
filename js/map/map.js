@@ -76,6 +76,19 @@ class Map extends Chart {
     // to a data element form our COVID data that we can manipulate.
     vis.getDataByFeature = feat => vis.dataToRender.find(d => feat.properties.name === d.key);
 
+    // Allow for zooming and panning within a reasonable extent
+    let zoom = d3.zoom()
+        .scaleExtent([1.2,50])
+        .on('zoom', () => {
+          vis.g.attr('transform', d3.event.transform);
+        });
+
+    // Set default zoom level to fill up the panel of the map
+    vis.svg.call(zoom)
+        .call(zoom.transform, d3.zoomIdentity.translate(20,0).scale(1.2))
+        .append('svg:g')
+        .attr('transform', 'scale(1,1)');
+
     vis.config.dataset.initialize().then(() => { vis.update(); });
   }
 
@@ -198,19 +211,6 @@ class Map extends Chart {
     //     console.log('Could not find: ' + d.key);
     //   }
     // });
-
-    // Allow for zooming and panning within a reasonable extent
-    let zoom = d3.zoom()
-        .scaleExtent([1.2,50])
-        .on('zoom', () => {
-          vis.g.attr('transform', d3.event.transform);
-        });
-
-    // Set default zoom level to fill up the panel of the map
-    vis.svg.call(zoom)
-        .call(zoom.transform, d3.zoomIdentity.translate(20,0).scale(1.2))
-        .append('svg:g')
-        .attr('transform', 'scale(1,1)');
 
     let geoPath = vis.g.selectAll('.geo-path')
       .data(vis.features);
