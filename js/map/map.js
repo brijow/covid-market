@@ -192,16 +192,16 @@ class Map extends Chart {
     // This function prints out the names of all countries for which a matching country
     // cannot be found in our TOPOJson file.  This can be removed once our project is
     // complete.
-    vis.dataToRender.forEach(d => {
-      let country = vis.features.filter(feat => feat.properties.name === d.key);
-      if (country.length === 0) {
-        console.log('Could not find: ' + d.key);
-      }
-    });
+    // vis.dataToRender.forEach(d => {
+    //   let country = vis.features.filter(feat => feat.properties.name === d.key);
+    //   if (country.length === 0) {
+    //     console.log('Could not find: ' + d.key);
+    //   }
+    // });
 
     // Allow for zooming and panning within a reasonable extent
     let zoom = d3.zoom()
-        .scaleExtent([1.2,5])
+        .scaleExtent([1.2,50])
         .on('zoom', () => {
           vis.g.attr('transform', d3.event.transform);
         });

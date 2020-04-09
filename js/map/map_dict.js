@@ -29,7 +29,21 @@ const MapDict =
     | Martinique                         | (Technically part of France)
     | Reunion                            | (Technically part of France)
     | North Ireland                      | (This is part of the United Kingdom)
+    | Antigua and Barbuda                | Anigua and Barb.
+    | Burma                              | Myanmar
+    | Central African Republic           | Central African Rep.
+    | Congo (Brazzaville)                | Congo
+    | Equatorial Guinea                  | Eq. Guinea
+    | Eswatini                           | eSwatini
+    | Saint Kitts and Nevis              | St. Kitts and Nevis
+    | Saint Vincent and the Grenadines   | St. Vin. and Gren.
+    | Sao Tome and Principe              | São Tomé and Principe
+    | South Sudan                        | S. Sudan
+    | West Bank and Gaza                 | (At the risk of being too political, the map lists this as Palestine.)
+    | Western Sahara                     | W. Sahara
     -------------------------------- Problem children ---------------------------------
+    | MS Zaandam                         | Cruise ship
+    | Diamond Princess                   | Cruise ship
     | Channel Islands                    | ('Jersey' and 'Guernsey' are listed separately)
     | Others                             | (Cruise ships)
     -----------------------------------------------------------------------------
@@ -62,4 +76,16 @@ const MapDict =
     'Martinique'                     : 'France',
     'Reunion'                        : 'France',
     'North Ireland'                  : 'United Kingdom',
+    'Burma'                          : 'Myanmar',
+    'Antigua and Barbuda'            : 'Antigua and Barb.',
+    'Central African Republic'       : 'Central African Rep.',
+    'Congo (Brazzaville)'            : 'Congo',
+    'Equatorial Guinea'              : 'Eq. Guinea',
+    'Eswatini'                       : 'eSwatini',
+    'Saint Kitts and Nevis'          : 'St. Kitts and Nevis',
+    'Saint Vincent and the Grenadines':'St. Vin. and Gren.',
+    'Sao Tome and Principe'          : 'São Tomé and Principe',
+    'South Sudan'                    : 'S. Sudan',
+    'West Bank and Gaza'             : 'Palestine',
+    'Western Sahara'                 : 'W. Sahara'
 };
