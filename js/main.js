@@ -27,8 +27,8 @@ function swap(json)
  * NEVER MODIFY THESE PROPERTIES WITHOUT CALLING THE SETTERS!  The setters will take care
  * of error checking and calling the update() method of all the charts.
  */
-const DATE_START = new Date('01/22/2020'); // min date common to all our datasets
-const DATE_END = new Date('03/11/20');     // max date common to all our datasets
+const DATE_START = new Date('1/22/20'); // min date common to all our datasets
+const DATE_END = new Date('4/7/20');     // max date common to all our datasets
 
 const state = {
   startDate: DATE_START,

@@ -95,7 +95,7 @@ class VirusPlot extends Chart
         {
             if (index_scaled)
             {
-                scale_number = country.data[index_start-1];
+                var scale_number = country.data[index_start-1];
 
                 country.data = country.data.slice(index_start, index_end);
 
