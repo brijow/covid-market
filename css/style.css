@@ -51,19 +51,9 @@ div.tooltip {
   stroke-width: 0.8px;
 }
 
-/*For during development*/
 .my-container {
-    border:  4px dotted green;
     padding-left: 3rem;
     padding-right: 3rem;
-}
-
-.my-row {
-    border:  2px dotted red;
-}
-
-.my-col {
-    border:  2px dotted blue;
 }
 
 .my-nav-links a {
@@ -80,15 +70,24 @@ a.active {
 }
 
 .navbar-brand {
-    font-size: 1.6rem;
+    font-size: 2rem;
+}
+
+.line-chart-row {
+    margin-top: 5px;
+    /*border:  1px solid #98a4af;*/
 }
 
 div .map {
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 0px;
     padding-right: 0px;
 }
 
 div .virus {
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 0px;
     padding-right: 0px;
 }
