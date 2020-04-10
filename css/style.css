@@ -108,11 +108,11 @@ div .virus {
 #virus_axis_y
 {
     fill: #000;
-    font-size: 1.75rem;
+    font-size: 1.2rem;
 }
 
 .virus_axis_label
 {
     fill: #343a40;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
 }
