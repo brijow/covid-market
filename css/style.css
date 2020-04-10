@@ -66,6 +66,19 @@ div.tooltip {
     border:  2px dotted blue;
 }
 
+.my-nav-links a {
+    font-size: 1.3rem;
+    color: #98a4af;
+}
+
+a.active {
+    color: #ffffff;
+}
+
+.my-tab-content {
+    font-size: 1.2rem;
+}
+
 .navbar-brand {
     font-size: 1.6rem;
 }

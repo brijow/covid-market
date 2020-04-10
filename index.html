@@ -12,17 +12,17 @@
 
         <!--Navbar-->
         <nav class="navbar navbar-dark bg-dark">
-        <span class="navbar-brand">COVID-19 Market Indicators</span>
+        <span class="navbar-brand text-danger">COVID-19 Market Indicators</span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample01">
+        <div class="navbar-collapse" id="navbarsExample01">
             <div class="row">
                 <div class="col-2">
-                    <ul class="nav flex-column">
-                        <li class="active">
-                            <a data-toggle="tab" href="#purpose">Purpose<span class="sr-only">(current)</span></a>
+                    <ul class="nav flex-column my-nav-links">
+                        <li>
+                            <a data-toggle="tab" href="#purpose" class="active">Purpose</a>
                         </li>
                         <li>
                             <a data-toggle="tab" href="#usage">Usage</a>
@@ -32,22 +32,26 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-10 tab-content">
-                    <div id="purpose" class="tab-pane fade in active">
+                <div class="col-10 tab-content my-tab-content">
+                    <div id="purpose" class="tab-pane active">
                         <ul class="text-warning">
-                            <li>Track and compare the rise and fall of stock prices on a daily basis</li>
-                            <li>Explore a dataset to identify global trends of COVID-19</li>
-                            <li>Find correlations between the spread of the virus and stock market activity</li>
+                            <li>Visualize how markets are reacting to the COVID-19 pandemic, from Jan 22, 2020 to Apr 7, 2020.</li>
+                            <li>Explore global or regional trends in COVID-19 confirmed cases, recovered cases, and deaths.</li>
+                            <li>Find correlations between COVID-19 statistics and market fluxuations for different time periods.</li>
                         </ul>
                     </div>
                     <div id="usage" class="tab-pane fade">
                         <ul class="text-warning">
-                            <li>Usage here</li>
+                            <li>Click and drag mouse in the line chart to apply a d3 brush and filter COVID-19 data by date.</li>
+                            <li>Zoom in and out of the map to get a closer view of particular regions of interest.</li>
+                            <li>Select a country by clicking on it in the map, or by choosing it in the drop down menu.</li>
+                            <li>Choose a COVID-19 statistic to visualize by selecting "confirmed", "recovered" or "dead".</li>
                         </ul>
                     </div>
                     <div id="references" class="tab-pane fade">
                         <ul class="text-warning">
-                            <li>References</li>
+                            <li>Data for market indicators: Yahoo Finance.</li>
+                            <li>Data for COVID-19 statistics: Kaggle.</li>
                         </ul>
                     </div>
                 </div>
