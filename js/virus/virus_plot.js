@@ -262,10 +262,10 @@ class VirusPlot extends Chart
             cn_selection.exit().remove();
         }
 
-        var title_pt_1 = "COVID-19 grouped by country from ";
-        var title_pt_2 = state.getStartDateAsStr();
-        var title_pt_3 = " to ";
-        var title_pt_4 = state.getEndDateAsStr();
+        var title_pt_1 = "Cumulative COVID-19 cases since ";
+        var title_pt_2 = DATE_START.toLocaleDateString();
+        var title_pt_3 = ": ";
+        var title_pt_4 = vis.selected_countries_array[0];
         var title      = title_pt_1 + title_pt_2 + title_pt_3 + title_pt_4;
 
         $("#virus-title").text(title);
@@ -363,16 +363,16 @@ class VirusPlot extends Chart
         }
         else
         {
-            virus_country_1.val("N/A");
+            virus_country_1.val("worldwide");
 
             if (virus_country_1.val() === null)
             {
                 var option_1 = document.createElement("option");
-                option_1.value     = "N/A";
-                option_1.innerHTML = "N/A";
+                option_1.value     = "worldwide";
+                option_1.innerHTML = "worldwide";
                 virus_country_1[0].appendChild(option_1);
 
-                virus_country_1.val("N/A");
+                virus_country_1.val("worldwide");
             }
         }
     }

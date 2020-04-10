@@ -97,23 +97,22 @@
 
             <p>Please select what to display:</p>
             <form id="form_virus_display">
-                <input type="radio" id="virus_display_confirmed" name="name_virus_display" value="confirmed">
-                <label for="virus_display_confirmed">Number of confirmed cases</label><br>
+                <input type="radio" id="virus_display_recovered" name="name_virus_display" value="recovered" checked="true">
+                <label for="virus_display_recovered">Number of recovered cases</label><br>
 
                 <input type="radio" id="virus_display_dead"      name="name_virus_display" value="dead">
                 <label for="virus_display_dead"     >Number of dead cases</label><br>
 
-                <input type="radio" id="virus_display_recovered" name="name_virus_display" value="recovered" checked="true">
-                <label for="virus_display_recovered">Number of recovered cases</label><br>
+                <input type="radio" id="virus_display_confirmed" name="name_virus_display" value="confirmed">
+                <label for="virus_display_confirmed">Number of confirmed cases</label><br>
             </form>
 
             <br>
 
-            <p>Please select a country:</p>
             <form id="form_virus_country">
-                <label for="virus_country_1">Choose the <span style="color: red;"   >1st</span> country</label>
+                <label for="virus_country_1">Please select a country:</label>
                 <select id="virus_country_1">
-                    <option value="N/A">N/A</option>
+                    <option value="worldwide">worldwide</option>
                 </select><br>
             </form>
 
