@@ -261,6 +261,14 @@ class VirusPlot extends Chart
 
             cn_selection.exit().remove();
         }
+
+        var title_pt_1 = "COVID-19 grouped by country from ";
+        var title_pt_2 = state.getStartDateAsStr();
+        var title_pt_3 = " to ";
+        var title_pt_4 = state.getEndDateAsStr();
+        var title      = title_pt_1 + title_pt_2 + title_pt_3 + title_pt_4;
+
+        $("#virus-title").text(title);
     }
 
     handle_chart_state()
