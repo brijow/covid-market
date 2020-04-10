@@ -105,9 +105,6 @@ class VirusPlot extends Chart
                 country.data.forEach(d =>
                 {
                     d = d.slice();
-
-                    d[0] = d[0];
-                    d[1] = d[1] - scale_number;
                 });
 
                 if (abs_max < country.max)
@@ -122,9 +119,6 @@ class VirusPlot extends Chart
                 country.data.forEach(d =>
                 {
                     d = d.slice();
-
-                    d[0] = d[0];
-                    d[1] = d[1];
                 });
 
                 if (abs_max < country.max)
