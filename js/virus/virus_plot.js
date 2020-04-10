@@ -83,7 +83,7 @@ class VirusPlot extends Chart
         var index_end    = vis.virgin_dataset.availableDates.indexOf(state.getEndDateAsStr())   + 1;
         var index_scaled = false;
 
-        if ((index_end - index_start) > vis.number_of_days)
+        if ((index_end - index_start) >= vis.number_of_days)
         {
             index_start  = index_end - vis.number_of_days;
             index_scaled = true;
