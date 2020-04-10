@@ -2,7 +2,7 @@
 
 ## Writeup
 
-![m2 Screenshot](./m2_screenshot.PNG)
+![m2 Screenshot](./m3_screenshot.PNG)
 
 As described in our project proposal, visualization goals remain the same.  They are to allow users to:
 
@@ -46,12 +46,12 @@ We have strived to keep our data processing pipeline simple and separate from ou
 | UI: arrange charts responsively                              | 23/03/20       | Was not planned         | 4 hours                 |
 | Milestone 2 meeting                                          | 23/03/20       | 1 hour per team member  | 1 hour per team member  |
 | Milestone 2 Writeup                                          | 25/03/20       | 2 hours per team member | 2 hours per team member |
-| TODO<br />Bar chart: interactivity with radio buttons (select between "confirmed", "deaths", and "recovered") | 05/04/20       | 4 hours                 |                         |
-| TODO<br />Bar chart + map: bidirectional interactivity.  Allow users to select up to 4 countries to show bar chart data for, either by clicking on countries on the map or by selecting countries from dropdown menus below the bar chart | 05/04/20       | 6 hours                 |                         |
-| TODO<br />Line chart: interactivity.  Allow users to click and drag a region of dates on the line chart, and have those changes reflected in both the bar chart and the map | 05/04/20       | 8 hours                 |                         |
-| TODO<br />Milestone 3 meeting                                | 06/04/20       | 1 hour per team member  |                         |
-| TODO<br />Milestone 3 writeup                                | 07/04/20       | 2 hours per team member |                         |
-| TODO<br />Project demo                                       | TBD            | TBD                     |                         |
+| Bar chart: interactivity with radio buttons (select between "confirmed", "deaths", and "recovered") | 05/04/20       | 4 hours | 4 hours |
+| Bar chart + map: bidirectional interactivity.  Allow users to select up to 4 countries to show bar chart data for, either by clicking on countries on the map or by selecting countries from dropdown menus below the bar chart | 05/04/20       | 6 hours | 6 hours |
+| Line chart: interactivity.  Allow users to click and drag a region of dates on the line chart, and have those changes reflected in both the bar chart and the map | 05/04/20       | 8 hours | 8 hours |
+| Milestone 3 meeting                                | 06/04/20       | 1 hour per team member  | 1 hour per team member |
+| Milestone 3 writeup                                | 07/04/20       | 2 hours per team member | 2 hours per team member |
+| Project demo                                       | 11/04/20       | 6 minutes | TBD |
 
 
 
