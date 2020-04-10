@@ -86,7 +86,7 @@ class VirusPlot extends Chart
         if ((index_end - index_start) >= vis.number_of_days)
         {
             index_start  = index_end - vis.number_of_days;
-            index_scaled = true;
+            index_scaled = false;
         }
         else
         {
