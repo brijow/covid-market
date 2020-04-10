@@ -107,6 +107,12 @@ class VirusPlot extends Chart
                     d = d.slice();
                 });
 
+                for (var i=0; i<country.data.length; i++)
+                {
+                    country.data[i][0] = country.data[i][0];
+                    country.data[i][1] = country.data[i][1];
+                }
+
                 if (abs_max < country.max)
                 {
                     abs_max = country.max;
@@ -120,6 +126,12 @@ class VirusPlot extends Chart
                 {
                     d = d.slice();
                 });
+
+                for (var i=0; i<country.data.length; i++)
+                {
+                    country.data[i][0] = country.data[i][0];
+                    country.data[i][1] = country.data[i][1];
+                }
 
                 if (abs_max < country.max)
                 {
