@@ -179,15 +179,15 @@ class Map extends Chart {
 
     // Update title of map
     let titlePreamble = vis.visualize_confirmed 
-      ? 'Confirmed COVID-19 cases from '
+      ? 'Confirmed COVID-19 cases between '
       : vis.visualize_dead
-        ? 'COVID-19 deaths from '
-        : 'Recovered COVID-19 cases from '
+        ? 'COVID-19 deaths between '
+        : 'Recovered COVID-19 cases between '
     d3.select('h5.map-title')
         .text(
             titlePreamble
             + state.startDate.toLocaleDateString()
-            + ' to '
+            + ' and '
             + state.endDate.toLocaleDateString()
           );
 
@@ -201,16 +201,6 @@ class Map extends Chart {
     vis.features.map(d => {
       d.properties.projected = vis.projection(d3.geoCentroid(d));
     });
-
-    // This function prints out the names of all countries for which a matching country
-    // cannot be found in our TOPOJson file.  This can be removed once our project is
-    // complete.
-    // vis.dataToRender.forEach(d => {
-    //   let country = vis.features.filter(feat => feat.properties.name === d.key);
-    //   if (country.length === 0) {
-    //     console.log('Could not find: ' + d.key);
-    //   }
-    // });
 
     let geoPath = vis.g.selectAll('.geo-path')
       .data(vis.features);
