@@ -75,7 +75,6 @@ a.active {
 
 .line-chart-row {
     margin-top: 5px;
-    /*border:  1px solid #98a4af;*/
 }
 
 div .map {
@@ -93,7 +92,7 @@ div .virus {
 }
 
 .x-axis text {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 .y-axis text {
   font-size: 1rem;
@@ -103,17 +102,17 @@ div .virus {
 #virus_axis_x
 {
     fill: #000;
-    font-size: 0.75rem;
+    font-size: 24px;
 }
 
 #virus_axis_y
 {
     fill: #000;
-    font-size: 0.75rem;
+    font-size: 1.75rem;
 }
 
 .virus_axis_label
 {
-    fill: #000;
-    font-size: 0.75rem;
+    fill: #343a40;
+    font-size: 2.75rem;
 }
