@@ -83,10 +83,10 @@ class VirusPlot extends Chart
         var index_end    = vis.virgin_dataset.availableDates.indexOf(state.getEndDateAsStr())   + 1;
         var index_scaled = false;
 
-        if ((index_end - index_start) > vis.number_of_days)
+        if ((index_end - index_start) >= vis.number_of_days)
         {
             index_start  = index_end - vis.number_of_days;
-            index_scaled = true;
+            index_scaled = false;
         }
         else
         {
@@ -98,17 +98,20 @@ class VirusPlot extends Chart
         {
             if (index_scaled)
             {
-                var scale_number = country.data[index_start-1];
+                var scale_number = country.data[index_start-1][1];
 
                 country.data = country.data.slice(index_start, index_end);
 
                 country.data.forEach(d =>
                 {
                     d = d.slice();
-
-                    d[0] = d[0];
-                    d[1] = d[1] - scale_number;
                 });
+
+                for (var i=0; i<country.data.length; i++)
+                {
+                    country.data[i][0] = country.data[i][0];
+                    country.data[i][1] = country.data[i][1];
+                }
 
                 if (abs_max < country.max)
                 {
@@ -122,10 +125,13 @@ class VirusPlot extends Chart
                 country.data.forEach(d =>
                 {
                     d = d.slice();
-
-                    d[0] = d[0];
-                    d[1] = d[1];
                 });
+
+                for (var i=0; i<country.data.length; i++)
+                {
+                    country.data[i][0] = country.data[i][0];
+                    country.data[i][1] = country.data[i][1];
+                }
 
                 if (abs_max < country.max)
                 {
@@ -254,6 +260,14 @@ class VirusPlot extends Chart
 
             cn_selection.exit().remove();
         }
+
+        var title_pt_1 = "Cumulative COVID-19 cases since ";
+        var title_pt_2 = DATE_START.toLocaleDateString();
+        var title_pt_3 = ": ";
+        var title_pt_4 = vis.selected_countries_array[0];
+        var title      = title_pt_1 + title_pt_2 + title_pt_3 + title_pt_4;
+
+        $("#virus-title").text(title);
     }
 
     handle_chart_state()
@@ -348,16 +362,16 @@ class VirusPlot extends Chart
         }
         else
         {
-            virus_country_1.val("N/A");
+            virus_country_1.val("worldwide");
 
             if (virus_country_1.val() === null)
             {
                 var option_1 = document.createElement("option");
-                option_1.value     = "N/A";
-                option_1.innerHTML = "N/A";
+                option_1.value     = "worldwide";
+                option_1.innerHTML = "worldwide";
                 virus_country_1[0].appendChild(option_1);
 
-                virus_country_1.val("N/A");
+                virus_country_1.val("worldwide");
             }
         }
     }
