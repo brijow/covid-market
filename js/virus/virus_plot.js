@@ -163,14 +163,13 @@ class VirusPlot extends Chart
 
         var margin = { top    : 20,
                        bottom : 60,
-                       left   : 90,
+                       left   : 115,
                        right  : 40};
 
         var innerWidth  = target_width  - margin.left - margin.right;
         var innerHeight = target_height - margin.top  - margin.bottom;
 
         const xValue     = d => d[0];
-        const xAxisLabel = "Date";
 
         const yValue     = d => d[1];
         const yAxisLabel = "Number of People";
@@ -199,7 +198,7 @@ class VirusPlot extends Chart
 
         const AxisY = d3.axisLeft(AxisScaleY)
             .tickSize(-innerWidth)
-            .tickPadding(15);
+            .tickPadding(5);
 
         const chartAxisX = chart.selectAll("#virus_axis_x").data([null])
             .enter().append("g")
@@ -218,8 +217,8 @@ class VirusPlot extends Chart
             .merge(chartAxisX.selectAll(".virus_axis_label").data([null]))
             .attr("class", "virus_axis_label")
             .attr("x",     innerWidth/2)
-            .attr("y",     70)
-            .text(xAxisLabel);
+            .attr("y",     70);
+
 
         const chartAxisY = chart.selectAll("#virus_axis_y").data([null])
             .enter().append("g")
@@ -237,7 +236,7 @@ class VirusPlot extends Chart
             .merge(chartAxisY.selectAll(".virus_axis_label").data([null]))
             .attr("class", "virus_axis_label")
             .attr("x",     -innerHeight/2)
-            .attr("y",     -70)
+            .attr("y",     -90)
             .attr("transform",   "rotate(-90)")
             .attr("text-anchor", "middle")
             .text(yAxisLabel);

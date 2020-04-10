@@ -51,19 +51,9 @@ div.tooltip {
   stroke-width: 0.8px;
 }
 
-/*For during development*/
 .my-container {
-    border:  4px dotted green;
     padding-left: 3rem;
     padding-right: 3rem;
-}
-
-.my-row {
-    border:  2px dotted red;
-}
-
-.my-col {
-    border:  2px dotted blue;
 }
 
 .my-nav-links a {
@@ -80,21 +70,29 @@ a.active {
 }
 
 .navbar-brand {
-    font-size: 1.6rem;
+    font-size: 2rem;
+}
+
+.line-chart-row {
+    margin-top: 5px;
 }
 
 div .map {
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 0px;
     padding-right: 0px;
 }
 
 div .virus {
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 0px;
     padding-right: 0px;
 }
 
 .x-axis text {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 .y-axis text {
   font-size: 1rem;
@@ -104,17 +102,17 @@ div .virus {
 #virus_axis_x
 {
     fill: #000;
-    font-size: 0.75rem;
+    font-size: 24px;
 }
 
 #virus_axis_y
 {
     fill: #000;
-    font-size: 0.75rem;
+    font-size: 1.75rem;
 }
 
 .virus_axis_label
 {
-    fill: #000;
-    font-size: 0.75rem;
+    fill: #343a40;
+    font-size: 2.75rem;
 }
