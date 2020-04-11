@@ -167,7 +167,7 @@ class VirusData
             }
         });
 
-        countries_outp.push({"name":"worldwide",
+        countries_outp.push({"name":"Worldwide",
                              "data":countries_total_array,
                              "min" :countries_total_min,
                              "max" :countries_total_max});
