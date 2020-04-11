@@ -117,6 +117,12 @@ div .virus {
     font-size: 1.7rem;
 }
 
+.border-navbar
+{
+    padding-left:  40px;
+    padding-right: 40px;
+}
+
 .border-stocks
 {
     border-top:    1px solid #e1e4e8;
