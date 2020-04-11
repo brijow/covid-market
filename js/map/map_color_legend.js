@@ -10,15 +10,15 @@ const mapColorLegend = (selection, props) => {
     titleText,
     thresholds
   } = props;
-  
+
   const backgroundRect = selection.selectAll('rect')
   	.data([null]);
-  
+
   backgroundRect.enter().append('rect')
   	.merge(backgroundRect)
   		.attr('x', -circleRadius * 2)
   		.attr('y', -circleRadius * 2)
-  		.attr('rx', circleRadius * 2)
+  		.attr('rx', 5)
   		.attr('width', backgroundRectWidth)
   		.attr('height', spacing * (thresholds.length + 1) + circleRadius * 2)
   		.attr('fill', 'white')
