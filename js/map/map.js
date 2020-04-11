@@ -1,5 +1,5 @@
 class Map extends Chart {
-  
+
   initVis() {
     super.initVis();
     let vis = this;
@@ -96,7 +96,7 @@ class Map extends Chart {
     let vis = this;
 
     // We get our end date from the current state's end date
-    let filteredEndData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+    let filteredEndData = vis.config.dataset.cleanedCovidDataMain.filter(d =>
       d['ObservationDate'].toDateString() === state.endDate.toDateString()
     );
 
@@ -115,13 +115,13 @@ class Map extends Chart {
 
     // if we have a start date different from the range of our data, then
     // we need to subtract the counts from the previous day from our
-    // data to render before we render it: 
+    // data to render before we render it:
     if (state.startDate > DATE_START) {
       let startDateMinusOne = new Date();
       let dateOffset = (24*60*60*1000); // 1 day
       startDateMinusOne.setTime(state.startDate.getTime() - dateOffset);
 
-      let filteredStartData = vis.config.dataset.cleanedCovidDataMain.filter(d => 
+      let filteredStartData = vis.config.dataset.cleanedCovidDataMain.filter(d =>
         d['ObservationDate'].toDateString() === state.startDate.toDateString()
       );
       let dataToSubtract = d3.nest()
@@ -178,16 +178,16 @@ class Map extends Chart {
     }
 
     // Update title of map
-    let titlePreamble = vis.visualize_confirmed 
-      ? 'Confirmed COVID-19 cases between '
+    let titlePreamble = vis.visualize_confirmed
+      ? 'Geographical COVID-19 cases from '
       : vis.visualize_dead
-        ? 'COVID-19 deaths between '
-        : 'Recovered COVID-19 cases between '
+        ? 'Geographical COVID-19 cases from '
+        : 'Geographical COVID-19 cases from '
     d3.select('h5.map-title')
         .text(
             titlePreamble
             + state.startDate.toLocaleDateString()
-            + ' and '
+            + ' to '
             + state.endDate.toLocaleDateString()
           );
 
