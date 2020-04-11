@@ -92,10 +92,14 @@ div .virus {
 }
 
 .x-axis text {
-  font-size: 1.15rem;
+    fill:      #424242;
+    color:     #424242;
+    font-size: 12px;
 }
 .y-axis text {
-  font-size: 1rem;
+    fill:      #424242;
+    color:     #424242;
+    font-size: 12px;
 }
 
 /*For Alan's virus chart*/
