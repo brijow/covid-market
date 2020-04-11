@@ -101,20 +101,23 @@ div .virus {
 /*For Alan's virus chart*/
 #virus_axis_x
 {
-    fill: #000;
-    font-size: 24px;
+    fill:      #424242;
+    color:     #424242;
+    font-size: 20px;
 }
 
 #virus_axis_y
 {
-    fill: #000;
-    font-size: 1.2rem;
+    fill:      #424242;
+    color:     #424242;
+    font-size: 20px;
 }
 
 .virus_axis_label
 {
-    fill: #343a40;
-    font-size: 1.7rem;
+    fill:      #424242;
+    color:     #424242;
+    font-size: 20px;
 }
 
 .border-navbar
