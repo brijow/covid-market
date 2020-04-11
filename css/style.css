@@ -121,6 +121,7 @@ div .virus {
 {
     padding-left:  40px;
     padding-right: 40px;
+    box-shadow:    0 2px 2px 2px rgba(0, 0, 0, 0.10);
 }
 
 .border-stocks
