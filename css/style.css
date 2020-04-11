@@ -127,3 +127,14 @@ div .virus {
     padding-top:    10px;
     padding-bottom: 10px;
 }
+
+.border-virus
+{
+    border-top:    1px solid #e1e4e8;
+    border-left:   1px solid #e1e4e8;
+    border-right:  1px solid #e1e4e8;
+    border-bottom: 1px solid #e1e4e8;
+
+    padding-top:    10px;
+    padding-bottom: 10px;
+}
