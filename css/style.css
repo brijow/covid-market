@@ -116,3 +116,14 @@ div .virus {
     fill: #343a40;
     font-size: 1.7rem;
 }
+
+.border-map
+{
+    border-top:    1px solid #e1e4e8;
+    border-left:   1px solid #e1e4e8;
+    border-right:  0px solid #e1e4e8;
+    border-bottom: 1px solid #e1e4e8;
+
+    padding-top:    10px;
+    padding-bottom: 10px;
+}
