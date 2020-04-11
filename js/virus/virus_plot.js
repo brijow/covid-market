@@ -261,10 +261,10 @@ class VirusPlot extends Chart
             cn_selection.exit().remove();
         }
 
-        var title_pt_1 = "Cumulative COVID-19 cases since ";
-        var title_pt_2 = DATE_START.toLocaleDateString();
-        var title_pt_3 = ": ";
-        var title_pt_4 = vis.selected_countries_array[0];
+        var title_pt_1 = "Cumulative COVID-19 cases from ";
+        var title_pt_2 = state.startDate.toLocaleDateString();
+        var title_pt_3 = " to ";
+        var title_pt_4 = state.endDate.toLocaleDateString();
         var title      = title_pt_1 + title_pt_2 + title_pt_3 + title_pt_4;
 
         $("#virus-title").text(title);
