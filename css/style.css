@@ -32,7 +32,7 @@ div.tooltip {
   font: 1rem sans-serif;
   background: #d3d3d3e6;
   border: 0px;
-  border-radius: 8px;
+  border-radius: 5px;
   pointer-events: none;
 }
 
