@@ -192,3 +192,13 @@ div .virus {
     font-family: 'Oswald', sans-serif;
     font-weight: 500;
 }
+
+.collapse_text
+{
+    font-size: 16px !important;
+}
+
+.warning_text
+{
+    font-size: 16px !important;
+}
