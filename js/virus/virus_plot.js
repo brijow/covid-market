@@ -170,9 +170,7 @@ class VirusPlot extends Chart
         var innerHeight = target_height - margin.top  - margin.bottom;
 
         const xValue     = d => d[0];
-
         const yValue     = d => d[1];
-        const yAxisLabel = "Number of People";
 
         // here we are currently rendering the charts
         const chart = target_svg.selectAll("#virus_chart").data([null])
@@ -236,10 +234,7 @@ class VirusPlot extends Chart
             .merge(chartAxisY.selectAll(".virus_axis_label").data([null]))
             .attr("class", "virus_axis_label")
             .attr("x",     -innerHeight/2)
-            .attr("y",     -90)
-            .attr("transform",   "rotate(-90)")
-            .attr("text-anchor", "middle")
-            .text(yAxisLabel);
+            .attr("y",     -90);
 
         // here we are currently rendering the countries
         for (var i=0; i<vis.selected_countries_length; i++)
