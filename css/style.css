@@ -180,3 +180,15 @@ div .virus {
     border-bottom: 1px solid #e1e4e8;
     margin-bottom: 10px;
 }
+
+.title_navbar
+{
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+}
+
+.title_charts
+{
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+}
