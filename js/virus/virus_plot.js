@@ -161,10 +161,10 @@ class VirusPlot extends Chart
         var target_width  = +target_svg.attr("width")  || 1200;
         var target_height = +target_svg.attr("height") || 600;
 
-        var margin = { top    : 20,
-                       bottom : 60,
-                       left   : 115,
-                       right  : 40};
+        var margin = { top    : 0,
+                       bottom : 100,
+                       left   : 100,
+                       right  : 25};
 
         var innerWidth  = target_width  - margin.left - margin.right;
         var innerHeight = target_height - margin.top  - margin.bottom;
