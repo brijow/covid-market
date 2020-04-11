@@ -145,6 +145,12 @@ div .virus {
     padding-bottom: 10px;
 }
 
+.border-map-header
+{
+    border-bottom: 1px solid #e1e4e8;
+    margin-bottom: 10px;
+}
+
 .border-virus
 {
     border-top:    1px solid #e1e4e8;
