@@ -275,7 +275,7 @@ class VirusPlot extends Chart
         // the following logic is for when 0 selected countries
         if (state.selectedCountry === null)
         {
-            vis.selected_countries_array = ["worldwide"];
+            vis.selected_countries_array = ["Worldwide"];
 
             return;
         }
@@ -341,7 +341,7 @@ class VirusPlot extends Chart
 
         var virus_country_1 = $("#virus_country_1");
 
-        if (vis.selected_countries_array[0] !== "worldwide")
+        if (vis.selected_countries_array[0] !== "Worldwide")
         {
             virus_country_1.val(vis.selected_countries_array[0]);
 
@@ -357,16 +357,16 @@ class VirusPlot extends Chart
         }
         else
         {
-            virus_country_1.val("worldwide");
+            virus_country_1.val("Worldwide");
 
             if (virus_country_1.val() === null)
             {
                 var option_1 = document.createElement("option");
-                option_1.value     = "worldwide";
-                option_1.innerHTML = "worldwide";
+                option_1.value     = "Worldwide";
+                option_1.innerHTML = "Worldwide";
                 virus_country_1[0].appendChild(option_1);
 
-                virus_country_1.val("worldwide");
+                virus_country_1.val("Worldwide");
             }
         }
     }
