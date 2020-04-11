@@ -22,9 +22,9 @@ class Map extends Chart {
         .attr('class', 'map-background')
         .attr('d', vis.path({type: 'Sphere'}));
 
-    vis.visualize_confirmed = false;
+    vis.visualize_confirmed = true;
     vis.visualize_dead      = false;
-    vis.visualize_recovered = true;
+    vis.visualize_recovered = false;
 
     // Set thresholds for colour value
     // Adapted from Mike Bostock's threshold choropleth:
